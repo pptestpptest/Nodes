@@ -1,0 +1,112 @@
+{{ file_header }}
+
+import NeedleFoundation
+import Nodes
+
+/*
+ PURPOSE:
+ Declares the dependencies required by this Plugin that will be injected (not created by this Plugin itself).
+ */
+internal protocol {{ plugin_name }}PluginDependency: Dependency {}
+
+/*
+ PURPOSE:
+ Declares dependencies that are owned by this Plugin.
+ */
+internal final class {{ plugin_name }}PluginComponent: Component
+    <{{ plugin_name }}PluginDependency> {
+
+    /*
+     Dependencies
+     ============
+
+     Declare dependencies as 'fileprivate' properties (increasing access control only as necessary).
+
+     fileprivate let example: Example = .init()
+
+     Whenever possible, for example when the dependency does not maintain any state, define the property as a
+     factory that always returns a new instance:
+
+     fileprivate var example: Example {
+         Example()
+     }
+
+     Only when a singleton simply cannot be avoided and is absolutely necessary, shared instances may be returned:
+
+     fileprivate var example: Example {
+         shared { Example() }
+     }
+
+     */
+
+    /*
+     Child Components
+     ================
+
+     Declare child component factories as 'fileprivate' methods.
+
+     fileprivate func childComponentFactory() -> ChildComponent {
+         ChildComponent(parent: self)
+     }
+
+     */{% if not object_type %}
+
+    fileprivate func componentFactory() -> {{ plugin_name }}Component {
+        {{ plugin_name }}Component(parent: self)
+    }{% endif %}
+}
+
+/*
+ PURPOSE:
+ To provide additional state used in determining if the Plugin is enabled (can be any type relevant to your feature).
+ */
+internal typealias {{ plugin_name }}PluginStateType = Void
+
+/*
+ PURPOSE:
+ The Plugin interface (available to mock for testability).
+ */
+internal protocol {{ plugin_name }}Plugin {
+    func create() -> {% if object_type %}{{ object_type }}{% else %}{{ plugin_name }}Builder{% endif %}?
+}
+
+internal typealias {{ plugin_name }}PluginType = Plugin
+    <
+    {{ plugin_name }}PluginComponent,
+    {% if object_type %}{{ object_type }}{% else %}{{ plugin_name }}Builder{% endif %},
+    {{ plugin_name }}PluginStateType
+    >
+
+/*
+ PURPOSE:
+ Concrete implementation of the Plugin to optionally build objects.
+ */
+internal final class {{ plugin_name }}PluginImp:
+    {{ plugin_name }}PluginType, {{ plugin_name }}Plugin {
+
+    /// The method in which the Plugin's enabled criteria is defined.
+    /// - Parameters:
+    ///   - component: The component instance
+    ///   - state: The state
+    /// - Returns: The enabled status of the Plugin
+    internal override func isEnabled(
+        component: {{ plugin_name }}PluginComponent,
+        state: {{ plugin_name }}PluginStateType
+    ) -> Bool {
+        false
+    }
+
+    /// The factory method in which the resulting object is initialized.
+    /// - Parameter component: The component instance
+    /// - Returns: The built instance{% if object_type %}
+    internal override func build(
+        component: {{ plugin_name }}PluginComponent
+    ) -> {{ object_type }} {
+        // TODO: Initialize resulting object
+    }{% else %}
+    internal override func build(
+        component: {{ plugin_name }}PluginComponent
+    ) -> {{ plugin_name }}Builder {
+        {{ plugin_name }}BuilderImp(componentFactory: component.componentFactory)
+    }{% endif %}
+}

@@ -1,0 +1,97 @@
+{{ file_header }}
+{% for import in context_imports %}
+import {{ import }}{% endfor %}
+
+/*
+ PURPOSE:
+ The Context delegates callbacks to its (external) Listener, typically the parent Context.
+ */
+{% if public_node %}public{% else %}internal{% endif %} protocol {{ node_name }}Listener: AnyObject {}
+
+/*
+ PURPOSE:
+ The interface that the Context will speak to the Flow through. Used to initiate navigation as
+ an example.
+ */{% if root_node %}
+internal protocol {{ node_name }}FlowInterface: Flow {
+    func didBecomeReady()
+}{% else %}
+internal protocol {{ node_name }}FlowInterface: Flow {}{% endif %}{% if owns_view %}
+
+/*
+ PURPOSE:
+ The interface that the Context will speak to the View through. Used to inform the View of any
+ state change (i.e. to keep the UI in sync).
+ */
+internal protocol {{ node_name }}Presentable: AnyObject {
+    var receiver: {{ node_name }}Receiver? { get set }
+    var viewState: {{ node_name }}ViewState { get set }
+}{% endif %}
+
+/*
+ PURPOSE:
+ Contains the business logic of the Node. The lifecycle of the Node is bookended between the
+ `didBecomeActive` and `willResignActive` methods.
+ */{% if owns_view %}
+internal final class {{ node_name }}ContextImp: AbstractPresentableContext
+    <{{ cancellable_type }}, {{ node_name }}Presentable> {
+{% else %}
+internal final class {{ node_name }}ContextImp: AbstractContext
+    <{{ cancellable_type }}> {
+{% endif %}
+    /// The Flow instance.
+    internal weak var flow: {{ node_name }}FlowInterface?
+
+    /// The Listener instance.
+    internal weak var listener: {{ node_name }}Listener?
+
+    /// The Analytics instance.
+    private let analytics: {{ node_name }}Analytics{% if owns_view %}{% if root_node %}
+
+    private var isReady: Bool = false{% endif %}
+
+    /// The initializer.
+    /// - Parameters:
+    ///   - presentable: The Presentable instance
+    ///   - workers: The Worker instances
+    ///   - analytics: The Analytics instance
+    internal init(
+        presentable: {{ node_name }}Presentable,
+        workers: [Worker],
+        analytics: {{ node_name }}Analytics
+    ) {
+        self.analytics = analytics
+        super.init(presentable: presentable, workers: workers + [analytics])
+        presentable.receiver = self
+    }{% else %}
+
+    /// The initializer.
+    /// - Parameters:
+    ///   - workers: The Worker instances
+    ///   - analytics: The Analytics instance
+    internal init(
+        workers: [Worker],
+        analytics: {{ node_name }}Analytics
+    ) {
+        self.analytics = analytics
+        super.init(workers: workers + [analytics])
+    }{% endif %}
+
+    /// Implement logic to execute when the Context becomes active.
+    internal override func didBecomeActive() {}
+
+    /// Implement logic to execute when the Context will become inactive.
+    internal override func willResignActive() {}
+}
+
+extension {{ node_name }}ContextImp: {{ node_name }}ContextInterface {}{% if owns_view %}{% if root_node %}
+extension {{ node_name }}ContextImp: {{ node_name }}Receiver {
+
+    func viewDidAppear() {
+        guard !isReady
+        else { return }
+        isReady = true
+        flow?.didBecomeReady()
+    }
+}{% else %}
+extension {{ node_name }}ContextImp: {{ node_name }}Receiver {}{% endif %}{% endif %}

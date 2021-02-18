@@ -1,0 +1,33 @@
+{{ file_header }}
+{% for import in worker_imports %}
+import {{ import }}{% endfor %}
+
+/*
+ PURPOSE:
+ Encapsulates work to be performed by the Context.
+ */
+internal protocol {{ worker_name }}Worker: Worker {}
+
+/*
+ PURPOSE:
+ Concrete implementation of the Worker.
+ */
+internal final class {{ worker_name }}WorkerImp: AbstractWorker<{{ cancellable_type }}> {
+
+    /// The Analytics instance.
+    private let analytics: {{ node_name }}Analytics
+
+    /// The initializer.
+    /// - Parameter analytics: The Analytics instance
+    internal init(analytics: {{ node_name }}Analytics) {
+        self.analytics = analytics
+    }
+
+    /// Implement logic to execute when the Worker is started.
+    internal override func didStart() {}
+
+    /// Implement logic to execute when the Worker has stopped.
+    internal override func willStop() {}
+}
+
+extension {{ worker_name }}WorkerImp: {{ worker_name }}Worker {}
