@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  XcodeTemplateGeneratorCommand.swift
 //  XcodeTemplateGeneratorTool
 //
 //  Created by Christopher Fuller on 4/25/21.
@@ -8,6 +8,7 @@
 import ArgumentParser
 import XcodeTemplateGeneratorLibrary
 
+@main
 internal struct XcodeTemplateGeneratorCommand: ParsableCommand {
 
     internal static var configuration: CommandConfiguration = .init(commandName: "xc-template-generator",
@@ -22,14 +23,7 @@ internal struct XcodeTemplateGeneratorCommand: ParsableCommand {
     private var path: String?
 
     internal func run() throws {
-        try XcodeTemplates(config: config()).generate(identifier: identifier)
-    }
-
-    private func config() throws -> XcodeTemplates.Config {
-        guard let path = path
-        else { return XcodeTemplates.Config() }
-        return try XcodeTemplates.Config(at: path)
+        let config: ConfigFactory = .init()
+        try XcodeTemplates(config: config(path: path)).generate(identifier: identifier)
     }
 }
-
-XcodeTemplateGeneratorCommand.main()
