@@ -101,10 +101,10 @@ public struct ModalStyle: Equatable {
     /// Overlays the presenting view controller which remains visible.
     /// All content not covered by the presented view controller will also be visible.
     ///
-    /// - Parameter controlStatusBarAppearance: A boolean value specifying whether or not the presented view controller
+    /// - Parameter controlStatusBarAppearance: A Boolean value specifying whether the presented view controller
     ///   takes over control of status bar appearance from the presenting view controller.
     ///
-    /// - Returns: A ``ModalStyle`` instance with `behavior` set to `.overlay `, the given
+    /// - Returns: A ``ModalStyle`` instance with `behavior` set to `.overlay`, the given
     ///   `controlStatusBarAppearance` and `allowInteractiveDismissal` set to `false`.
     public static func overlay(
         controlStatusBarAppearance: Bool = false
@@ -122,9 +122,9 @@ public struct ModalStyle: Equatable {
     ///
     /// - Parameters:
     ///   - sheetStyle: The SheetStyle used to specify page or form behavior.
-    ///   - controlStatusBarAppearance: A boolean value specifying whether or not the presented view controller
+    ///   - controlStatusBarAppearance: A Boolean value specifying whether the presented view controller
     ///     takes over control of status bar appearance from the presenting view controller.
-    ///   - allowInteractiveDismissal: A boolean value specifying whether or not the presentation allows interactive
+    ///   - allowInteractiveDismissal: A Boolean value specifying whether the presentation allows interactive
     ///     dismissal.
     ///
     /// - Returns: A ``ModalStyle`` instance with `behavior` set to the given `sheetStyle`, the given
@@ -148,13 +148,13 @@ public struct ModalStyle: Equatable {
 
     /// A factory method that creates a ``ModalStyle`` with custom behavior.
     ///
-    /// Custom presentation controlled by `UIViewControllerTransitioningDelegate`
-    /// and `UIViewControllerAnimatedTransitioning` object(s).
+    /// Custom presentation controlled by ``UIViewControllerTransitioningDelegate``
+    /// and ``UIViewControllerAnimatedTransitioning`` object(s).
     ///
-    /// - Parameter controlStatusBarAppearance: A boolean value specifying whether or not the presented view controller
+    /// - Parameter controlStatusBarAppearance: A Boolean value specifying whether the presented view controller
     ///   takes over control of status bar appearance from the presenting view controller.
     ///
-    /// - Returns: A ``ModalStyle`` instance with `behavior` set to `. custom`, the given
+    /// - Returns: A ``ModalStyle`` instance with `behavior` set to `.custom`, the given
     ///   `controlStatusBarAppearance` and `allowInteractiveDismissal` set to `false`.
     public static func custom(
         controlStatusBarAppearance: Bool = false
