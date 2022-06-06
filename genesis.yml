@@ -2248,6 +2248,100 @@ files:
 
       class {{ project|split:' '|join:'_' }}Tests: XCTestCase {}
 
+  - path: "{{ project|split:' '|join:'_' }}Tests/Tests/Helpers/DependencyProviderRegistrationBuilder.swift"
+    contents: |
+      //
+      //  DependencyProviderRegistrationBuilder.swift
+      //  {{ project|split:' '|join:'_' }}Tests
+      //
+      //  Created by {{ author }} on {{ date }}.
+      //
+
+      import NeedleFoundation
+      import Nodes
+      import XCTest
+
+      private let registry: __DependencyProviderRegistry = .instance
+
+      internal final class DependencyProviderRegistrationBuilder {
+
+          private var path: [String]
+          private let registration: (_ path: [String], _ dependency: AnyObject) -> Void
+
+          fileprivate init(
+              path: [String],
+              registration: @escaping (_ path: [String], _ dependency: AnyObject) -> Void
+          ) {
+              self.path = path
+              self.registration = registration
+          }
+
+          @discardableResult
+          internal func injectComponent<T: Component<U>, U>(
+              ofType type: T.Type,
+              with dependency: () -> U
+          ) -> Self {
+              let parts: [String] = "\(T.self)".components(separatedBy: ".")
+              path.append(parts[parts.count - 1])
+              registration(path, dependency() as AnyObject)
+              return self
+          }
+
+          @discardableResult
+          internal func injectComponent<T: Component<U>, U>(
+              ofType type: T.Type,
+              with dependency: @autoclosure () -> U
+          ) -> Self {
+              injectComponent(ofType: type, with: dependency)
+          }
+      }
+
+      extension XCTestCase {
+
+          internal func injectComponent<T: Component<U>, U>(
+              componentFactory: @escaping (_ parent: Scope) -> T,
+              with dependency: () -> U
+          ) -> () -> T {
+              registry.register(path: ["^", "BootstrapComponent"],
+                                dependencyProviderFactory: EmptyDependencyProvider.init,
+                                addTeardownBlock: addTeardownBlock)
+              let bootstrap: BootstrapComponent = .init()
+              injectComponents(descendingFrom: bootstrap).injectComponent(ofType: T.self, with: dependency)
+              return { componentFactory(bootstrap) }
+          }
+
+          internal func injectComponents(descendingFrom scope: Scope) -> DependencyProviderRegistrationBuilder {
+              DependencyProviderRegistrationBuilder(path: scope.path) { [weak self] in
+                  registry.register(path: $0, dependency: $1) { self?.addTeardownBlock($0) }
+              }
+          }
+      }
+
+      private extension __DependencyProviderRegistry {
+
+          func register(
+              path: [String],
+              dependencyProviderFactory: @escaping (_ scope: Scope) -> AnyObject,
+              addTeardownBlock: (_ block: @escaping () -> Void) -> Void
+          ) {
+              let componentPath: String = path.joined(separator: "->")
+              registerDependencyProviderFactory(for: componentPath, dependencyProviderFactory)
+              addTeardownBlock { [weak self] in
+                  self?.unregisterDependencyProviderFactory(for: componentPath)
+              }
+          }
+
+          func register(
+              path: [String],
+              dependency: AnyObject,
+              addTeardownBlock: (_ block: @escaping () -> Void) -> Void
+          ) {
+              register(path: path,
+                       dependencyProviderFactory: { _ in dependency },
+                       addTeardownBlock: addTeardownBlock)
+          }
+      }
+
   - path: Package.swift
     contents: |
       // swift-tools-version:5.6
