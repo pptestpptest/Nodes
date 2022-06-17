@@ -6,9 +6,9 @@
 //
 
 /**
- * Nodes’ abstract `Plugin` base class.
+ * Nodes’ abstract ``Plugin`` base class.
  *
- * `Plugin` has the following generic parameters:
+ * ``Plugin`` has the following generic parameters:
  * | Name          | Description                                                                                 |
  * | ------------- | ------------------------------------------------------------------------------------------- |
  * | ComponentType | The DI graph `Component` type.                                                              |
@@ -19,7 +19,7 @@ open class Plugin<ComponentType, BuildType, StateType> {
 
     private let component: ComponentType
 
-    /// Initializes a new `Plugin` instance.
+    /// Initializes a new ``Plugin`` instance.
     ///
     /// - Parameter component: The `ComponentType` instance.
     public init(component: ComponentType) {
