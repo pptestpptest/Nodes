@@ -76,6 +76,14 @@ open class Plugin<ComponentType, BuildType, StateType> {
         return build(component: component)
     }
 
+    /// Initializes and returns a `BuildType` instance ignoring whether the plugin is enabled.
+    ///
+    /// - Returns: A `BuildType` instance.
+    public func override() -> BuildType {
+        let component: ComponentType = makeComponent()
+        return build(component: component)
+    }
+
     // MARK: - Access Control: private
 
     private func makeComponent() -> ComponentType {
