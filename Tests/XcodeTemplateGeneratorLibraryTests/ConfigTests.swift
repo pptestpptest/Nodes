@@ -35,6 +35,35 @@ final class ConfigTests: XCTestCase {
         assertSnapshot(matching: Config(), as: .dump)
     }
 
+    func testUIFrameworkForKind() throws {
+        var config: XcodeTemplates.Config = .init()
+        config.uiFrameworks = [
+            UIFramework(framework: .appKit),
+            UIFramework(framework: .uiKit),
+            UIFramework(framework: .swiftUI),
+            UIFramework(framework: .custom(name: "<name>",
+                                           import: "<import>",
+                                           viewControllerType: "<viewControllerType>")
+            )
+        ]
+        try UIFramework.Kind
+            .allCases
+            .forEach { try expect(config.uiFramework(for: $0).kind) == $0 }
+    }
+
+    func testUIFrameworkForKindIsNotDefined() throws {
+        var config: XcodeTemplates.Config = .init()
+        config.uiFrameworks = []
+        try UIFramework.Kind
+            .allCases
+            .forEach { kind in
+                try expect(config.uiFramework(for: kind))
+                    .to(throwError(errorType: XcodeTemplates.Config.ConfigError.self) { error in
+                        expect(error) == .uiFrameworkNotDefined(kind: kind)
+                    })
+            }
+    }
+
     private func givenConfig() -> String {
         """
         uiFrameworks:
