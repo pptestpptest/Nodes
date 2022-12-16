@@ -72,8 +72,8 @@ final class ConfigTests: XCTestCase, TestFactories {
               viewControllerMethodsForRootNode: <viewControllerMethodsForRootNode-SwiftUI>
             - framework:
                 custom:
-                  name: <name>
-                  import: <import>
+                  name: <uiFrameworkName>
+                  import: <uiFrameworkImport>
                   viewControllerType: <viewControllerType>
                   viewControllerSuperParameters: <viewControllerSuperParameters>
               viewControllerProperties: <viewControllerProperties-Custom>
