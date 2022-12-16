@@ -1,5 +1,6 @@
 ▿ NodeViewInjectedTemplate
   ▿ context: NodeViewInjectedContext
+    - analyticsImports: 0 elements
     ▿ builderImports: 4 elements
       - "<baseImports>"
       - "<dependencyInjectionImports>"
@@ -32,6 +33,7 @@
           - key: "type"
           - value: "<flowPropertiesType>"
     - nodeName: "___VARIABLE_productName___"
+    - stateImports: 0 elements
     - viewControllableFlowType: "<viewControllableFlowType>"
     - viewControllableType: "<viewControllableType>"
     ▿ workerImports: 3 elements
