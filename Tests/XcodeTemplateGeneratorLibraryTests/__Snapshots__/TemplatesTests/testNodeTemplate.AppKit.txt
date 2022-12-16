@@ -1,5 +1,6 @@
 ▿ NodeTemplate
   ▿ context: NodeContext
+    - analyticsImports: 0 elements
     ▿ builderImports: 4 elements
       - "<baseImports>"
       - "<dependencyInjectionImports>"
@@ -34,6 +35,7 @@
     - nodeName: "___VARIABLE_productName___"
     - publisherFailureType: "<publisherFailureType>"
     - publisherType: "<publisherType>"
+    - stateImports: 0 elements
     - viewControllableFlowType: "<viewControllableFlowType>"
     - viewControllableType: "<viewControllableType>"
     ▿ viewControllerImports: 4 elements
@@ -46,6 +48,10 @@
     - viewControllerSuperParameters: "nibName: nil, bundle: nil"
     - viewControllerType: "NSViewController"
     - viewControllerUpdateComment: "<viewControllerUpdateComment>"
+    ▿ viewStateImports: 3 elements
+      - "<baseImports>"
+      - "<reactiveImports>"
+      - "Nodes"
     - viewStateOperators: "<viewStateOperators>"
     - viewStatePublisher: "<viewStatePublisher>"
     ▿ workerImports: 3 elements
