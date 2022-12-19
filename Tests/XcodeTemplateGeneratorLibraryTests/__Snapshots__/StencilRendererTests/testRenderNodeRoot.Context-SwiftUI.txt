@@ -33,6 +33,9 @@ internal final class RootContextImp: AbstractContext
     /// The Listener instance.
     internal weak var listener: RootListener?
 
+    /// The State instance.
+    @Published internal private(set) var state: RootState
+
     /// The Analytics instance.
     private let analytics: RootAnalytics
 
@@ -46,6 +49,7 @@ internal final class RootContextImp: AbstractContext
         workers: [Worker],
         analytics: RootAnalytics
     ) {
+        self.state = RootState()
         self.analytics = analytics
         super.init(workers: workers)
     }
