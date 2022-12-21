@@ -36,7 +36,7 @@ internal struct {{ node_name }}View: NodesView {
 
     /// The body of the view.
     internal var body: some View {{ '{' }}
-        WithViewState(viewState) { viewState in
+        WithViewState(statePublisher, initialState: initialState) { viewState in
             Text(verbatim: "\(type(of: viewState))")
         }
     }
@@ -47,13 +47,23 @@ internal struct {{ node_name }}View: NodesView {
     /// The Analytics instance.
     internal weak var analytics: {{ node_name }}Analytics?
 
+    /// The initial view state.
+    private let initialState: {{ node_name }}ViewState
+
     /// The view state publisher.
-    private let viewState: {{ publisher_type }}<{{ node_name }}ViewState{{ publisher_failure_type }}>
+    private let statePublisher: {{ publisher_type }}<{{ node_name }}ViewState{{ publisher_failure_type }}>
 
     /// The initializer.
-    /// - Parameter viewState: The view state publisher
-    internal init(viewState: {{ publisher_type }}<{{ node_name }}ViewState{{ publisher_failure_type }}>) {
-        self.viewState = viewState{% if view_state_operators %}
+    ///
+    /// - Parameters:
+    ///   - initialState: The initial view state.
+    ///   - statePublisher: The view state publisher.
+    internal init(
+        initialState: {{ node_name }}ViewState,
+        statePublisher: {{ publisher_type }}<{{ node_name }}ViewState{{ publisher_failure_type }}>
+    ) {
+        self.initialState = initialState
+        self.statePublisher = statePublisher{% if view_state_operators %}
             {{ view_state_operators|indent:12 }}{% endif %}
     }
 }
@@ -64,10 +74,10 @@ internal struct {{ node_name }}View: NodesView {
  */
 internal struct {{ node_name }}View_Previews: PreviewProvider {
 
-    private static let viewState: AnyPublisher<{{ node_name }}ViewState{{ publisher_failure_type }}> =
-        Just<{{ node_name }}ViewState>(.initialState).eraseToAnyPublisher()
-
     internal static var previews: some View {
-        {{ node_name }}View(viewState: viewState)
+        {{ node_name }}View(
+            initialState: {{ node_name }}ViewState(),
+            statePublisher: Empty().eraseToAnyPublisher()
+        )
     }
 }
