@@ -45,8 +45,8 @@ final class PluginListTests: XCTestCase, TestCaseHelpers {
         // swiftlint:disable:next discouraged_optional_collection
         var creationOrderOverride: [String]?
 
-        override func `default`(component: ComponentType) -> BuildType {
-            BuildType(identifier: "default")
+        override func `default`(component: ComponentType) -> (key: String, instance: BuildType) {
+            (key: "default", instance: BuildType(identifier: "default"))
         }
 
         override func plugins(component: ComponentType) -> KeyValuePairs<String, AnyPlugin> {
@@ -120,6 +120,12 @@ final class PluginListTests: XCTestCase, TestCaseHelpers {
         expect(pluginList.create(key: "plugin2")?.identifier) == "default"
         pluginList.creationOrderOverride = []
         expect(pluginList.create(key: "plugin2")?.identifier) == "default"
+    }
+
+    func testPluginListWithDefaultCreateWithDefaultKey() throws {
+        let pluginList: TestPluginListWithDefault = .init { ComponentType() }
+        expect(pluginList).to(notBeNilAndToDeallocateAfterTest())
+        expect(pluginList.create(key: "default")?.identifier) == "default"
     }
 
     func testPluginListDuplicateKeys() {
