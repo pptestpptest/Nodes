@@ -426,7 +426,7 @@ files:
        PURPOSE:
        A dependency needed by the Builder (such as a Listener), passed in from the caller (i.e. is not on the DI graph).
 
-       Can be a tuple containing multiple values when necessary.
+       Can be a tuple or struct containing multiple values when necessary.
        */
       internal typealias AppDynamicBuildDependency = Void
 
@@ -434,7 +434,7 @@ files:
        PURPOSE:
        A dependency used by the Component itself, passed into the Component's initializer (in the Component factory).
 
-       Can be a tuple containing multiple values when necessary.
+       Can be a tuple or struct containing multiple values when necessary.
        */
       internal typealias AppDynamicComponentDependency = Void
 
@@ -844,7 +844,7 @@ files:
        PURPOSE:
        A dependency needed by the Builder (such as a Listener), passed in from the caller (i.e. is not on the DI graph).
 
-       Can be a tuple containing multiple values when necessary.
+       Can be a tuple or struct containing multiple values when necessary.
        */
       internal typealias SceneDynamicBuildDependency = (SceneListener, WindowSceneViewControllable)
 
@@ -852,7 +852,7 @@ files:
        PURPOSE:
        A dependency used by the Component itself, passed into the Component's initializer (in the Component factory).
 
-       Can be a tuple containing multiple values when necessary.
+       Can be a tuple or struct containing multiple values when necessary.
        */
       internal typealias SceneDynamicComponentDependency = Void
 
@@ -947,7 +947,7 @@ files:
           /// The purpose of this method is to route input parameters to either the dynamic build dependency and/or
           /// the dynamic component dependency.
           ///
-          /// The dynamic dependencies can be tuples containing multiple values when necessary.
+          /// The dynamic dependencies can be tuples or structs containing multiple values when necessary.
           /// - Parameter listener: An object that can listen for signals from the Node
           /// - Returns: The Flow instance
           internal func build(
@@ -1258,7 +1258,7 @@ files:
        PURPOSE:
        A dependency needed by the Builder (such as a Listener), passed in from the caller (i.e. is not on the DI graph).
 
-       Can be a tuple containing multiple values when necessary.
+       Can be a tuple or struct containing multiple values when necessary.
        */
       internal typealias WindowDynamicBuildDependency = (WindowListener, WindowViewControllable)
 
@@ -1266,7 +1266,7 @@ files:
        PURPOSE:
        A dependency used by the Component itself, passed into the Component's initializer (in the Component factory).
 
-       Can be a tuple containing multiple values when necessary.
+       Can be a tuple or struct containing multiple values when necessary.
        */
       internal typealias WindowDynamicComponentDependency = Void
 
@@ -1361,7 +1361,7 @@ files:
           /// The purpose of this method is to route input parameters to either the dynamic build dependency and/or
           /// the dynamic component dependency.
           ///
-          /// The dynamic dependencies can be tuples containing multiple values when necessary.
+          /// The dynamic dependencies can be tuples or structs containing multiple values when necessary.
           /// - Parameter listener: An object that can listen for signals from the Node
           /// - Returns: The Flow instance
           internal func build(
@@ -1667,7 +1667,7 @@ files:
        PURPOSE:
        A dependency needed by the Builder (such as a Listener), passed in from the caller (i.e. is not on the DI graph).
 
-       Can be a tuple containing multiple values when necessary.
+       Can be a tuple or struct containing multiple values when necessary.
        */
       internal typealias RootDynamicBuildDependency = RootListener
 
@@ -1675,7 +1675,7 @@ files:
        PURPOSE:
        A dependency used by the Component itself, passed into the Component's initializer (in the Component factory).
 
-       Can be a tuple containing multiple values when necessary.
+       Can be a tuple or struct containing multiple values when necessary.
        */
       internal typealias RootDynamicComponentDependency = Void
 
@@ -1765,7 +1765,7 @@ files:
           /// The purpose of this method is to route input parameters to either the dynamic build dependency and/or
           /// the dynamic component dependency.
           ///
-          /// The dynamic dependencies can be tuples containing multiple values when necessary.
+          /// The dynamic dependencies can be tuples or structs containing multiple values when necessary.
           /// - Parameter listener: An object that can listen for signals from the Node
           /// - Returns: The Flow instance
           internal func build(withListener listener: RootListener) -> RootFlow {
