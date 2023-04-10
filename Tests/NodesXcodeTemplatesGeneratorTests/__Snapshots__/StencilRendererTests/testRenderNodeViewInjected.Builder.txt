@@ -148,11 +148,13 @@ internal final class <nodeName>BuilderImp: AbstractBuilder
             analytics: analytics
         )
         context.listener = listener
-        return <nodeName>FlowImp(
+        let flow: <nodeName>FlowImp = .init(
             context: context,
             viewController: viewController,
             <flowPropertiesName>: component.dependency.<flowPropertiesName>
         )
+        context.flow = flow
+        return flow
     }
 }
 
