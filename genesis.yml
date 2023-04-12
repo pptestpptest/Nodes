@@ -1521,7 +1521,7 @@ files:
 
           private func attachRoot() {
               let flow: RootFlow = rootBuilder.build(withListener: context)
-              viewController.present(flow.viewControllable)
+              viewController.present(flow.getViewController())
               attach(starting: flow)
           }
       }
@@ -1932,11 +1932,6 @@ files:
        */
       internal final class RootFlowImp: AbstractFlow<RootContextInterface, RootViewControllable> {
 
-          /// Provides the parent Node with access to the View so it can be presented.
-          internal var viewControllable: ViewControllable {
-              viewController
-          }
-
           /// The initializer.
           ///
           /// Inject Plugins or Builders into the Flow in order to create sub-Flows.
@@ -1953,6 +1948,13 @@ files:
 
           /// Implement logic to execute when the Flow is started.
           override internal func didStart() {}
+
+          /// Provides the ``ViewControllable`` instance to the parent `Flow` for display or presentation.
+          ///
+          /// - Returns: The ``ViewControllable`` instance.
+          internal func getViewController() -> ViewControllable {
+              viewController
+          }
       }
 
       extension RootFlowImp: RootFlow {}
