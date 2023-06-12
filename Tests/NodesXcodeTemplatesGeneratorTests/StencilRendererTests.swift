@@ -12,20 +12,24 @@ final class StencilRendererTests: XCTestCase, TestFactories {
     private let importCounts: ClosedRange<Int> = 0...2
 
     func testRenderNode() throws {
-        try UIFramework.Kind.allCases.forEach { kind in
-            let context: NodeContext = givenNodeContext()
-            let templates: [String: String] = try StencilRenderer().renderNode(context: context, kind: kind)
-            expect(templates.keys.sorted()) == [
-                "Analytics",
-                "Builder",
-                "Context",
-                "Flow",
-                "State",
-                "ViewController",
-                "ViewState"
-            ]
-            templates.forEach { name, template in
-                assertSnapshot(matching: template, as: .lines, named: "\(name)-\(kind.rawValue)")
+        try importCounts.forEach { count in
+            try UIFramework.Kind.allCases.forEach { kind in
+                let context: NodeContext = givenNodeContext(importCount: count)
+                let templates: [String: String] = try StencilRenderer().renderNode(context: context, kind: kind)
+                expect(templates.keys.sorted()) == [
+                    "Analytics",
+                    "Builder",
+                    "Context",
+                    "Flow",
+                    "State",
+                    "ViewController",
+                    "ViewState"
+                ]
+                templates.forEach { name, template in
+                    assertSnapshot(matching: template,
+                                   as: .lines,
+                                   named: "\(name)-\(kind.rawValue)-importCount-\(count)")
+                }
             }
         }
     }
