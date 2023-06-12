@@ -50,17 +50,19 @@ final class StencilRendererTests: XCTestCase, TestFactories {
     }
 
     func testRenderNodeViewInjected() throws {
-        let context: NodeViewInjectedContext = givenNodeViewInjectedContext()
-        let templates: [String: String] = try StencilRenderer().renderNodeViewInjected(context: context)
-        expect(templates.keys.sorted()) == [
-            "Analytics",
-            "Builder",
-            "Context",
-            "Flow",
-            "State"
-        ]
-        templates.forEach { name, template in
-            assertSnapshot(matching: template, as: .lines, named: name)
+        try importCounts.forEach { count in
+            let context: NodeViewInjectedContext = givenNodeViewInjectedContext(importCount: count)
+            let templates: [String: String] = try StencilRenderer().renderNodeViewInjected(context: context)
+            expect(templates.keys.sorted()) == [
+                "Analytics",
+                "Builder",
+                "Context",
+                "Flow",
+                "State"
+            ]
+            templates.forEach { name, template in
+                assertSnapshot(matching: template, as: .lines, named: "\(name)-importCount-\(count)")
+            }
         }
     }
 

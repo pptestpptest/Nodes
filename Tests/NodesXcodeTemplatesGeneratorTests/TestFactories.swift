@@ -99,15 +99,15 @@ extension TestFactories {
         )
     }
 
-    func givenNodeViewInjectedContext() -> NodeViewInjectedContext {
+    func givenNodeViewInjectedContext(importCount: Int = 1) -> NodeViewInjectedContext {
         NodeViewInjectedContext(
             fileHeader: "<fileHeader>",
             nodeName: "<nodeName>",
-            analyticsImports: ["<analyticsImport>"],
-            builderImports: ["<builderImport>"],
-            contextImports: ["<contextImport>"],
-            flowImports: ["<flowImport>"],
-            stateImports: ["<stateImport>"],
+            analyticsImports: .mock(with: "analyticsImport", count: importCount),
+            builderImports: .mock(with: "builderImport", count: importCount),
+            contextImports: .mock(with: "contextImport", count: importCount),
+            flowImports: .mock(with: "flowImport", count: importCount),
+            stateImports: .mock(with: "stateImport", count: importCount),
             dependencies: [Variable(name: "<dependenciesName>", type: "<dependenciesType>")],
             analyticsProperties: [Variable(name: "<analyticsPropertiesName>", type: "<analyticsPropertiesType>")],
             flowProperties: [Variable(name: "<flowPropertiesName>", type: "<flowPropertiesType>")],
