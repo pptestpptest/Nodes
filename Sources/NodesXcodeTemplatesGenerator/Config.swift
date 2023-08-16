@@ -82,7 +82,7 @@ extension XcodeTemplates.Config {
             .eraseToAnyPublisher()
             """
         publisherType = "AnyPublisher"
-        publisherFailureType = ", Never"
+        publisherFailureType = "Never"
         cancellableType = "AnyCancellable"
     }
 }
