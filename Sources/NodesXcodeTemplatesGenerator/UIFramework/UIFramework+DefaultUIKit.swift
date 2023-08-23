@@ -20,6 +20,10 @@ extension UIFramework {
 
             override internal func viewWillDisappear(_ animated: Bool) {
                 super.viewWillDisappear(animated)
+                cancelSubscriptions()
+            }
+
+            private func cancelSubscriptions() {
                 cancellables.forEach { cancellable in
                     cancellable.cancel()
                     LeakDetector.detect(cancellable)
@@ -47,6 +51,10 @@ extension UIFramework {
 
             override internal func viewWillDisappear(_ animated: Bool) {
                 super.viewWillDisappear(animated)
+                cancelSubscriptions()
+            }
+
+            private func cancelSubscriptions() {
                 cancellables.forEach { cancellable in
                     cancellable.cancel()
                     LeakDetector.detect(cancellable)
