@@ -47,7 +47,7 @@ extension {{ node_name }}ViewController: {{ node_name }}ViewControllable {}
  PURPOSE:
  Concrete implementation of the View.
  */
-internal struct {{ node_name }}View: NodesView {
+internal struct {{ node_name }}View: View {
 
     /// The body of the view.
     internal var body: some View {
