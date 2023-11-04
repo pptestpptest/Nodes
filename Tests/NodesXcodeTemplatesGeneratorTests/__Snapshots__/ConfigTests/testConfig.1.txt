@@ -65,6 +65,7 @@
   - viewControllableFlowType: "<viewControllableFlowType>"
   - viewControllableType: "<viewControllableType>"
   - viewControllerUpdateComment: "<viewControllerUpdateComment>"
+  - viewStateEmptyFactory: "<viewStateEmptyFactory>"
   - viewStateOperators: "<viewStateOperators>"
   ▿ workerGenericTypes: 1 element
     - "AnyCancellable"
