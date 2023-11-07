@@ -70,5 +70,6 @@
   - viewStateOperators: "<viewStateOperators>"
   - viewStatePropertyComment: "<viewStatePropertyComment>"
   - viewStatePropertyName: "<viewStatePropertyName>"
+  - viewStateTransform: "<viewStateTransform>"
   ▿ workerGenericTypes: 1 element
     - "AnyCancellable"

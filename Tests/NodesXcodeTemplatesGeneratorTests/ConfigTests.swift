@@ -110,6 +110,7 @@ final class ConfigTests: XCTestCase, TestFactories {
         viewStateOperators: <viewStateOperators>
         viewStatePropertyComment: <viewStatePropertyComment>
         viewStatePropertyName: <viewStatePropertyName>
+        viewStateTransform: <viewStateTransform>
         publisherType: <publisherType>
         publisherFailureType: <publisherFailureType>
         cancellableType: <cancellableType>

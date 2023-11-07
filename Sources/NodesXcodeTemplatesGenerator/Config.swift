@@ -37,6 +37,7 @@ extension XcodeTemplates {
         public var viewStateOperators: String
         public var viewStatePropertyComment: String
         public var viewStatePropertyName: String
+        public var viewStateTransform: String
         public var publisherType: String
         public var publisherFailureType: String
         public var contextGenericTypes: [String]
@@ -93,6 +94,9 @@ extension XcodeTemplates.Config {
             """
         viewStatePropertyComment = "The view state publisher"
         viewStatePropertyName = "statePublisher"
+        viewStateTransform = """
+            Publishers.Map(upstream: context.$state, transform: viewStateFactory).eraseToAnyPublisher()
+            """
         publisherType = "AnyPublisher"
         publisherFailureType = "Never"
         contextGenericTypes = ["AnyCancellable"]
@@ -156,6 +160,9 @@ extension XcodeTemplates.Config {
         viewStatePropertyName =
             (try? decoder.decodeString(CodingKeys.viewStatePropertyName))
             ?? defaults.viewStatePropertyName
+        viewStateTransform =
+            (try? decoder.decodeString(CodingKeys.viewStateTransform))
+            ?? defaults.viewStateTransform
         publisherType =
             (try? decoder.decodeString(CodingKeys.publisherType))
             ?? defaults.publisherType

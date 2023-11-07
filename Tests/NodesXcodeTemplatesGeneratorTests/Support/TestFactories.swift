@@ -43,6 +43,7 @@ extension TestFactories {
         config.viewStateOperators = "<viewStateOperators>"
         config.viewStatePropertyComment = "<viewStatePropertyComment>"
         config.viewStatePropertyName = "<viewStatePropertyName>"
+        config.viewStateTransform = "<viewStateTransform>"
         config.publisherType = "<publisherType>"
         config.publisherFailureType = "<publisherFailureType>"
         config.contextGenericTypes = ["<contextGenericType>"]
