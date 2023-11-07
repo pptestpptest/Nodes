@@ -41,6 +41,7 @@ extension TestFactories {
         config.viewControllerUpdateComment = "<viewControllerUpdateComment>"
         config.viewStateEmptyFactory = "<viewStateEmptyFactory>"
         config.viewStateOperators = "<viewStateOperators>"
+        config.viewStatePropertyComment = "<viewStatePropertyComment>"
         config.viewStatePropertyName = "<viewStatePropertyName>"
         config.publisherType = "<publisherType>"
         config.publisherFailureType = "<publisherFailureType>"

@@ -35,6 +35,7 @@ extension XcodeTemplates {
         public var viewControllerUpdateComment: String
         public var viewStateEmptyFactory: String
         public var viewStateOperators: String
+        public var viewStatePropertyComment: String
         public var viewStatePropertyName: String
         public var publisherType: String
         public var publisherFailureType: String
@@ -90,6 +91,7 @@ extension XcodeTemplates.Config {
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
             """
+        viewStatePropertyComment = "The view state publisher"
         viewStatePropertyName = "statePublisher"
         publisherType = "AnyPublisher"
         publisherFailureType = "Never"
@@ -148,6 +150,9 @@ extension XcodeTemplates.Config {
         viewStateOperators =
             (try? decoder.decodeString(CodingKeys.viewStateOperators))
             ?? defaults.viewStateOperators
+        viewStatePropertyComment =
+            (try? decoder.decodeString(CodingKeys.viewStatePropertyComment))
+            ?? defaults.viewStatePropertyComment
         viewStatePropertyName =
             (try? decoder.decodeString(CodingKeys.viewStatePropertyName))
             ?? defaults.viewStatePropertyName
