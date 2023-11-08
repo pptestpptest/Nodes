@@ -24,6 +24,7 @@ extension XcodeTemplates {
         public var uiFrameworks: [UIFramework]
         public var fileHeader: String
         public var baseImports: Set<String>
+        public var baseTestImports: Set<String>
         public var reactiveImports: Set<String>
         public var dependencyInjectionImports: Set<String>
         public var dependencies: [Variable]
@@ -72,6 +73,7 @@ extension XcodeTemplates.Config {
         uiFrameworks = [UIFramework(framework: .uiKit), UIFramework(framework: .swiftUI)]
         fileHeader = "//___FILEHEADER___"
         baseImports = []
+        baseTestImports = ["XCTest"]
         reactiveImports = ["Combine"]
         dependencyInjectionImports = ["NeedleFoundation"]
         dependencies = []
@@ -121,6 +123,9 @@ extension XcodeTemplates.Config {
         baseImports =
             (try? decoder.decode(CodingKeys.baseImports))
             ?? defaults.baseImports
+        baseTestImports =
+            (try? decoder.decode(CodingKeys.baseTestImports))
+            ?? defaults.baseTestImports
         reactiveImports =
             (try? decoder.decode(CodingKeys.reactiveImports))
             ?? defaults.reactiveImports

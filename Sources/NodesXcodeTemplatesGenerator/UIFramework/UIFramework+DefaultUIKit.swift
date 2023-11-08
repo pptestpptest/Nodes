@@ -63,7 +63,8 @@ extension UIFramework {
             framework: .uiKit,
             viewControllerProperties: "",
             viewControllerMethods: Defaults.viewControllerMethods,
-            viewControllerMethodsForRootNode: Defaults.viewControllerMethodsForRootNode
+            viewControllerMethodsForRootNode: Defaults.viewControllerMethodsForRootNode,
+            viewControllableMockContents: ""
         )
     }
 }

@@ -13,6 +13,7 @@ public struct NodeContext: Context {
     private let stateImports: [String]
     private let viewControllerImports: [String]
     private let viewStateImports: [String]
+    private let testImports: [String]
     private let dependencies: [[String: Any]]
     private let analyticsProperties: [[String: Any]]
     private let flowProperties: [[String: Any]]
@@ -23,6 +24,7 @@ public struct NodeContext: Context {
     private let viewControllerSuperParameters: String
     private let viewControllerProperties: String
     private let viewControllerMethods: String
+    private let viewControllableMockContents: String
     private let viewControllerUpdateComment: String
     private let viewStateOperators: String
     private let publisherType: String
@@ -44,6 +46,7 @@ public struct NodeContext: Context {
             "state_imports": stateImports,
             "view_controller_imports": viewControllerImports,
             "view_state_imports": viewStateImports,
+            "test_imports": testImports,
             "dependencies": dependencies,
             "analytics_properties": analyticsProperties,
             "flow_properties": flowProperties,
@@ -54,6 +57,7 @@ public struct NodeContext: Context {
             "view_controller_super_parameters": viewControllerSuperParameters,
             "view_controller_properties": viewControllerProperties,
             "view_controller_methods": viewControllerMethods,
+            "view_controllable_mock_contents": viewControllableMockContents,
             "view_controller_update_comment": viewControllerUpdateComment,
             "view_state_operators": viewStateOperators,
             "publisher_type": publisherType,
@@ -74,6 +78,7 @@ public struct NodeContext: Context {
         stateImports: Set<String>,
         viewControllerImports: Set<String>,
         viewStateImports: Set<String>,
+        testImports: Set<String>,
         dependencies: [XcodeTemplates.Variable],
         analyticsProperties: [XcodeTemplates.Variable],
         flowProperties: [XcodeTemplates.Variable],
@@ -84,6 +89,7 @@ public struct NodeContext: Context {
         viewControllerSuperParameters: String,
         viewControllerProperties: String,
         viewControllerMethods: String,
+        viewControllableMockContents: String,
         viewControllerUpdateComment: String,
         viewStateOperators: String,
         publisherType: String,
@@ -101,6 +107,7 @@ public struct NodeContext: Context {
         self.stateImports = stateImports.sortedImports()
         self.viewControllerImports = viewControllerImports.sortedImports()
         self.viewStateImports = viewStateImports.sortedImports()
+        self.testImports = testImports.sortedImports()
         self.dependencies = dependencies.map(\.dictionary)
         self.analyticsProperties = analyticsProperties.map(\.dictionary)
         self.flowProperties = flowProperties.map(\.dictionary)
@@ -111,6 +118,7 @@ public struct NodeContext: Context {
         self.viewControllerSuperParameters = viewControllerSuperParameters
         self.viewControllerProperties = viewControllerProperties
         self.viewControllerMethods = viewControllerMethods
+        self.viewControllableMockContents = viewControllableMockContents
         self.viewControllerUpdateComment = viewControllerUpdateComment
         self.viewStateOperators = viewStateOperators
         self.publisherType = publisherType

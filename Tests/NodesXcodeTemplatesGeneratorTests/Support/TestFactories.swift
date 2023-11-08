@@ -26,6 +26,7 @@ extension TestFactories {
             uiFramework.viewControllerProperties = "<viewControllerProperties>"
             uiFramework.viewControllerMethods = "<viewControllerMethods>"
             uiFramework.viewControllerMethodsForRootNode = "<viewControllerMethodsForRootNode>"
+            uiFramework.viewControllableMockContents = "<viewControllableMockContents>"
             return uiFramework
         }
         config.fileHeader = "<fileHeader>"
@@ -63,6 +64,7 @@ extension TestFactories {
             stateImports: .mock(with: "stateImport", count: mockCount),
             viewControllerImports: .mock(with: "viewControllerImport", count: mockCount),
             viewStateImports: .mock(with: "viewStateImport", count: mockCount),
+            testImports: .mock(with: "testImport", count: mockCount),
             dependencies: .mock(with: "dependency", count: mockCount),
             analyticsProperties: .mock(with: "analyticsProperty", count: mockCount),
             flowProperties: .mock(with: "flowProperty", count: mockCount),
@@ -73,6 +75,7 @@ extension TestFactories {
             viewControllerSuperParameters: isStringIdentifierMocked ? "<viewControllerSuperParameters>" : "",
             viewControllerProperties: isStringIdentifierMocked ? "<viewControllerProperties>" : "",
             viewControllerMethods: isStringIdentifierMocked ? "<viewControllerMethods>" : "",
+            viewControllableMockContents: isStringIdentifierMocked ? "<viewControllableMockContents>" : "",
             viewControllerUpdateComment: isStringIdentifierMocked ? "<viewControllerUpdateComment>" : "",
             viewStateOperators: isStringIdentifierMocked ? "<viewStateOperators>" : "",
             publisherType: "<publisherType>",

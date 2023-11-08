@@ -18,6 +18,13 @@ public enum StencilTemplate: Equatable, CaseIterable, CustomStringConvertible {
     case viewState
     case worker
 
+    // Test stencils
+    case analyticsTests
+    case contextTests
+    case flowTests
+    case viewControllerTests
+    case viewStateTests
+
     /// Alternate Stencil source files for specific use cases.
     public enum Variation: String, Equatable, CaseIterable {
 
@@ -40,8 +47,28 @@ public enum StencilTemplate: Equatable, CaseIterable, CustomStringConvertible {
         internal let viewController: StencilTemplate
         internal let viewState: StencilTemplate
 
+        // Test stencils
+        internal let analyticsTests: StencilTemplate
+        internal let contextTests: StencilTemplate
+        internal let flowTests: StencilTemplate
+        internal let viewControllerTests: StencilTemplate
+        internal let viewStateTests: StencilTemplate
+
         internal var stencils: [StencilTemplate] {
-            [analytics, builder, context, flow, state, viewController, viewState]
+            [
+                analytics,
+                builder,
+                context,
+                flow,
+                state,
+                viewController,
+                viewState,
+                analyticsTests,
+                contextTests,
+                flowTests,
+                viewControllerTests,
+                viewStateTests
+            ]
         }
 
         internal init(for variation: StencilTemplate.Variation) {
@@ -52,6 +79,11 @@ public enum StencilTemplate: Equatable, CaseIterable, CustomStringConvertible {
             self.state = .state
             self.viewController = .viewController(variation)
             self.viewState = .viewState
+            self.analyticsTests = .analyticsTests
+            self.contextTests = .contextTests
+            self.flowTests = .flowTests
+            self.viewControllerTests = .viewControllerTests
+            self.viewStateTests = .viewStateTests
         }
     }
 
@@ -89,7 +121,12 @@ public enum StencilTemplate: Equatable, CaseIterable, CustomStringConvertible {
         .viewController(.default),
         .viewController(.swiftUI),
         .viewState,
-        .worker
+        .worker,
+        .analyticsTests,
+        .contextTests,
+        .flowTests,
+        .viewControllerTests,
+        .viewStateTests
     ]
 
     /// A string representation of the case for ``CustomStringConvertible`` conformance.
@@ -118,6 +155,16 @@ public enum StencilTemplate: Equatable, CaseIterable, CustomStringConvertible {
             return "ViewState"
         case .worker:
             return "Worker"
+        case .analyticsTests:
+            return "AnalyticsTests"
+        case .contextTests:
+            return "ContextTests"
+        case .flowTests:
+            return "FlowTests"
+        case .viewControllerTests:
+            return "ViewControllerTests"
+        case .viewStateTests:
+            return "ViewStateTests"
         }
     }
 
@@ -128,6 +175,8 @@ public enum StencilTemplate: Equatable, CaseIterable, CustomStringConvertible {
             return description
         case let .builder(variation), let .viewController(variation):
             return description.appending(variation.rawValue)
+        case .analyticsTests, .contextTests, .flowTests, .viewControllerTests, .viewStateTests:
+            return description
         }
     }
 
@@ -137,20 +186,24 @@ public enum StencilTemplate: Equatable, CaseIterable, CustomStringConvertible {
             return imports(config: config)
         case .viewController:
             return imports(config: config).union([uiFramework.import])
+        case .analyticsTests, .contextTests, .flowTests, .viewControllerTests, .viewStateTests:
+            return imports(config: config)
         }
     }
 
     internal func imports(config: XcodeTemplates.Config) -> Set<String> {
-        let imports: Set<String> = config.baseImports.union(["Nodes"])
+        let baseImports: Set<String> = config.baseImports.union(["Nodes"])
         switch self {
         case .analytics, .flow, .state, .viewState:
-            return imports
+            return baseImports
         case .builder:
-            return imports.union(config.reactiveImports).union(config.dependencyInjectionImports)
+            return baseImports.union(config.reactiveImports).union(config.dependencyInjectionImports)
         case .context, .viewController, .worker:
-            return imports.union(config.reactiveImports)
+            return baseImports.union(config.reactiveImports)
         case .plugin, .pluginList:
-            return imports.union(config.dependencyInjectionImports)
+            return baseImports.union(config.dependencyInjectionImports)
+        case .analyticsTests, .contextTests, .flowTests, .viewControllerTests, .viewStateTests:
+            return config.baseTestImports
         }
     }
 }
