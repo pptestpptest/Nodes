@@ -2,15 +2,13 @@
 
 #warning("Manually move this test file to the corresponding test target.")
 
-import <testImport>
+final class <nodeName>AnalyticsTests: XCTestCase {
 
-final class RootAnalyticsTests: XCTestCase {
-
-    private var analytics: RootAnalyticsImp!
+    private var analytics: <nodeName>AnalyticsImp!
 
     override func setUp() {
         super.setUp()
-        analytics = RootAnalyticsImp()
+        analytics = <nodeName>AnalyticsImp()
     }
 
     override func tearDown() {

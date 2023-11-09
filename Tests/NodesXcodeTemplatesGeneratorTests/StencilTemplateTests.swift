@@ -162,7 +162,10 @@ final class StencilTemplateTests: XCTestCase, TestFactories {
             .builder(.default),
             .context,
             .flow,
-            .state
+            .state,
+            .analyticsTests,
+            .contextTests,
+            .flowTests
         ]
     }
 
@@ -195,7 +198,7 @@ final class StencilTemplateTests: XCTestCase, TestFactories {
                 case .plugin, .pluginList:
                     expect(imports) == ["Nodes", "<baseImport>", "<dependencyInjectionImport>"]
                 case .contextTests, .analyticsTests, .viewControllerTests, .viewStateTests, .flowTests:
-                    expect(imports) == ["XCTest"]
+                    expect(imports) == ["<baseTestImports>"]
                 }
             }
         }

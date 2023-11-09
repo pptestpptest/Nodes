@@ -1,19 +1,18 @@
-<fileHeader>
+//___FILEHEADER___
 
 #warning("Manually move this test file to the corresponding test target.")
 
-import <testImport1>
-import <testImport2>
+import XCTest
 
-final class RootContextTests: XCTestCase {
+final class ___VARIABLE_productName___ContextTests: XCTestCase {
 
-    private var analyticsMock: RootAnalyticsMock!
-    private var context: RootContextImp!
+    private var analyticsMock: ___VARIABLE_productName___AnalyticsMock!
+    private var context: ___VARIABLE_productName___ContextImp!
 
     override func setUp() {
         super.setUp()
-        analyticsMock = RootAnalyticsMock()
-        context = RootContextImp(
+        analyticsMock = ___VARIABLE_productName___AnalyticsMock()
+        context = ___VARIABLE_productName___ContextImp(
             workers: [],
             analytics: analyticsMock
         )

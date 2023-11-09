@@ -2,18 +2,17 @@
 
 #warning("Manually move this test file to the corresponding test target.")
 
-import <testImport1>
-import <testImport2>
+import <testImports>
 
-final class RootContextTests: XCTestCase {
+final class <nodeName>ContextTests: XCTestCase {
 
-    private var analyticsMock: RootAnalyticsMock!
-    private var context: RootContextImp!
+    private var analyticsMock: <nodeName>AnalyticsMock!
+    private var context: <nodeName>ContextImp!
 
     override func setUp() {
         super.setUp()
-        analyticsMock = RootAnalyticsMock()
-        context = RootContextImp(
+        analyticsMock = <nodeName>AnalyticsMock()
+        context = <nodeName>ContextImp(
             workers: [],
             analytics: analyticsMock
         )
