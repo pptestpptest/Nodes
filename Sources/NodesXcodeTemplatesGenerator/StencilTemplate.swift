@@ -18,7 +18,7 @@ public enum StencilTemplate: Equatable, CustomStringConvertible {
     case viewState
     case worker
 
-    // Test stencils
+    // Tests
     case analyticsTests
     case contextTests
     case flowTests
@@ -47,7 +47,7 @@ public enum StencilTemplate: Equatable, CustomStringConvertible {
         internal let viewController: StencilTemplate
         internal let viewState: StencilTemplate
 
-        // Test stencils
+        // Tests
         internal let analyticsTests: StencilTemplate
         internal let contextTests: StencilTemplate
         internal let flowTests: StencilTemplate
@@ -89,6 +89,7 @@ public enum StencilTemplate: Equatable, CustomStringConvertible {
 
     /// The StencilTemplate cases that represent a view injected Node.
     internal struct NodeViewInjected {
+
         internal let analytics: StencilTemplate
         internal let builder: StencilTemplate
         internal let context: StencilTemplate
