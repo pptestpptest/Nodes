@@ -36,6 +36,7 @@ public struct NodeContext: Context {
     private let contextGenericTypes: [String]
     private let workerGenericTypes: [String]
     private let isPeripheryCommentEnabled: Bool
+    private let isNimbleEnabled: Bool
 
     internal var dictionary: [String: Any] {
         [
@@ -72,7 +73,8 @@ public struct NodeContext: Context {
             "publisher_failure_type": publisherFailureType,
             "context_generic_types": contextGenericTypes,
             "worker_generic_types": workerGenericTypes,
-            "is_periphery_comment_enabled": isPeripheryCommentEnabled
+            "is_periphery_comment_enabled": isPeripheryCommentEnabled,
+            "is_nimble_enabled": isNimbleEnabled
         ]
     }
 
@@ -108,7 +110,8 @@ public struct NodeContext: Context {
         publisherFailureType: String,
         contextGenericTypes: [String],
         workerGenericTypes: [String],
-        isPeripheryCommentEnabled: Bool
+        isPeripheryCommentEnabled: Bool,
+        isNimbleEnabled: Bool
     ) {
         self.fileHeader = fileHeader
         self.nodeName = nodeName
@@ -142,5 +145,6 @@ public struct NodeContext: Context {
         self.contextGenericTypes = contextGenericTypes
         self.workerGenericTypes = workerGenericTypes
         self.isPeripheryCommentEnabled = isPeripheryCommentEnabled
+        self.isNimbleEnabled = isNimbleEnabled
     }
 }
