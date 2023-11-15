@@ -2,11 +2,11 @@
 //  Copyright © 2021 Tinder (Match Group, LLC)
 //
 
-internal struct NodeViewInjectedTemplate: XcodeTemplate {
+internal struct NodeViewInjectedXcodeTemplate: XcodeTemplate {
 
     internal let name: String = "Node (view injected)"
     internal let stencils: [StencilTemplate]
-    internal let context: Context
+    internal let stencilContext: StencilContext
 
     internal let propertyList: PropertyList =
         .init(description: "The source files implementing a Node.",
@@ -19,7 +19,7 @@ internal struct NodeViewInjectedTemplate: XcodeTemplate {
     internal init(config: Config) {
         let node: StencilTemplate.NodeViewInjected = .init()
         stencils = node.stencils(includeTests: config.isTestTemplatesGenerationEnabled)
-        context = NodeViewInjectedContext(
+        stencilContext = NodeViewInjectedStencilContext(
             fileHeader: config.fileHeader,
             nodeName: config.variable("productName"),
             analyticsImports: node.analytics.imports(config: config),

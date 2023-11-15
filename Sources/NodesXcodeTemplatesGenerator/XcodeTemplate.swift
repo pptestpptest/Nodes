@@ -9,6 +9,6 @@ internal protocol XcodeTemplate {
 
     var name: String { get }
     var stencils: [StencilTemplate] { get }
-    var context: Context { get }
+    var stencilContext: StencilContext { get }
     var propertyList: PropertyList { get }
 }

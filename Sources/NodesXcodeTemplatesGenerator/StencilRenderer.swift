@@ -10,7 +10,7 @@ public final class StencilRenderer {
     public init() {}
 
     public func renderNode(
-        context: NodeContext,
+        context: NodeStencilContext,
         kind: UIFramework.Kind,
         includeTests: Bool
     ) throws -> [String: String] {
@@ -19,48 +19,48 @@ public final class StencilRenderer {
     }
 
     public func renderNodeRoot(
-        context: NodeRootContext
+        context: NodeRootStencilContext
     ) throws -> [String: String] {
         let node: StencilTemplate.Node = .init(for: .variation(for: .uiKit))
         return try renderNode(stencils: node.stencils(includeTests: false), with: context.dictionary)
     }
 
     public func renderNodeViewInjected(
-        context: NodeViewInjectedContext,
+        context: NodeViewInjectedStencilContext,
         includeTests: Bool
     ) throws -> [String: String] {
         let nodeViewInjected: StencilTemplate.NodeViewInjected = .init()
         return try renderNode(stencils: nodeViewInjected.stencils(includeTests: includeTests), with: context.dictionary)
     }
 
-    public func renderPlugin(context: PluginContext) throws -> String {
+    public func renderPlugin(context: PluginStencilContext) throws -> String {
         try render(.plugin, with: context.dictionary)
     }
 
-    public func renderPluginList(context: PluginListContext) throws -> String {
+    public func renderPluginList(context: PluginListStencilContext) throws -> String {
         try render(.pluginList, with: context.dictionary)
     }
 
-    public func renderWorker(context: WorkerContext) throws -> String {
+    public func renderWorker(context: WorkerStencilContext) throws -> String {
         try render(.worker, with: context.dictionary)
-    }
-
-    private func renderNode(stencils: [StencilTemplate], with context: [String: Any]) throws -> [String: String] {
-        try Dictionary(uniqueKeysWithValues: stencils.map { stencil in
-            try (stencil.name, render(stencil, with: context))
-        })
     }
 
     internal func render(_ stencil: StencilTemplate, with context: [String: Any]) throws -> String {
         let bundle: Bundle = .moduleRelativeToExecutable ?? .module
         // swiftlint:disable:next force_unwrapping
         let stencilURL: URL = bundle.resourceURL!
-            .appendingPathComponent("Templates")
+            .appendingPathComponent("Stencils")
             .appendingPathComponent(stencil.filename)
             .appendingPathExtension("stencil")
         let template: String = try .init(contentsOf: stencilURL)
         let environment: Environment = .init(loader: DictionaryLoader(templates: [stencil.name: template]),
                                              trimBehaviour: .smart)
         return try environment.renderTemplate(name: stencil.name, context: context)
+    }
+
+    private func renderNode(stencils: [StencilTemplate], with context: [String: Any]) throws -> [String: String] {
+        try Dictionary(uniqueKeysWithValues: stencils.map { stencil in
+            try (stencil.name, render(stencil, with: context))
+        })
     }
 }
