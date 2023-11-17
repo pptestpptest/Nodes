@@ -6,14 +6,23 @@ public struct NodePresetStencilContext: StencilContext {
 
     public enum Preset: String {
 
+        case app = "App"
+        case scene = "Scene"
+        case window = "Window"
         case root = "Root"
 
         public var nodeName: String {
             rawValue
         }
 
-        public var ownsView: Bool {
+        public var isUserInterface: Bool {
             switch self {
+            case .app:
+                return false
+            case .scene:
+                return false
+            case .window:
+                return false
             case .root:
                 return true
             }
@@ -60,7 +69,7 @@ public struct NodePresetStencilContext: StencilContext {
         [
             "file_header": fileHeader,
             "node_name": preset.nodeName,
-            "owns_view": preset.ownsView,
+            "owns_view": preset.isUserInterface,
             "analytics_imports": analyticsImports,
             "builder_imports": builderImports,
             "context_imports": contextImports,

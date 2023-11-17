@@ -32,10 +32,12 @@ public final class StencilRenderer {
         context: NodePresetStencilContext
     ) throws -> [String: String] {
         let stencils: [StencilTemplate]
-        if context.preset.ownsView {
-            stencils = StencilTemplate.Node(for: .variation(for: .uiKit)).stencils(includeTests: false)
+        if context.preset.isUserInterface {
+            stencils = StencilTemplate.Node(for: .variation(for: .uiKit))
+                .stencils(includeState: true, includeTests: false)
         } else {
-            stencils = StencilTemplate.NodeViewInjected().stencils(includeTests: false)
+            stencils = StencilTemplate.NodeViewInjected()
+                .stencils(includeState: false, includeTests: false)
         }
         return try renderNode(stencils: stencils, with: context.dictionary)
     }

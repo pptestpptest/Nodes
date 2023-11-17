@@ -64,6 +64,63 @@ final class StencilRendererTests: XCTestCase, TestFactories {
         }
     }
 
+    func testRenderNodePresetApp() throws {
+        let stencilRenderer: StencilRenderer = .init()
+        try mockCounts.forEach { count in
+            let context: NodePresetStencilContext = givenNodePresetStencilContext(preset: .app, mockCount: count)
+            let templates: [String: String] = try stencilRenderer.renderNodePreset(context: context)
+            expect(templates.keys.sorted()) == [
+                "Analytics",
+                "Builder",
+                "Context",
+                "Flow"
+            ]
+            templates.forEach { name, template in
+                assertSnapshot(matching: template,
+                               as: .lines,
+                               named: "\(name)-UIKit-mockCount-\(count)")
+            }
+        }
+    }
+
+    func testRenderNodePresetScene() throws {
+        let stencilRenderer: StencilRenderer = .init()
+        try mockCounts.forEach { count in
+            let context: NodePresetStencilContext = givenNodePresetStencilContext(preset: .scene, mockCount: count)
+            let templates: [String: String] = try stencilRenderer.renderNodePreset(context: context)
+            expect(templates.keys.sorted()) == [
+                "Analytics",
+                "Builder",
+                "Context",
+                "Flow"
+            ]
+            templates.forEach { name, template in
+                assertSnapshot(matching: template,
+                               as: .lines,
+                               named: "\(name)-UIKit-mockCount-\(count)")
+            }
+        }
+    }
+
+    func testRenderNodePresetWindow() throws {
+        let stencilRenderer: StencilRenderer = .init()
+        try mockCounts.forEach { count in
+            let context: NodePresetStencilContext = givenNodePresetStencilContext(preset: .window, mockCount: count)
+            let templates: [String: String] = try stencilRenderer.renderNodePreset(context: context)
+            expect(templates.keys.sorted()) == [
+                "Analytics",
+                "Builder",
+                "Context",
+                "Flow"
+            ]
+            templates.forEach { name, template in
+                assertSnapshot(matching: template,
+                               as: .lines,
+                               named: "\(name)-UIKit-mockCount-\(count)")
+            }
+        }
+    }
+
     func testRenderNodePresetRoot() throws {
         let stencilRenderer: StencilRenderer = .init()
         try mockCounts.forEach { count in
