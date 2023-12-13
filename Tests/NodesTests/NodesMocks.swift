@@ -3,7 +3,7 @@
 //  Copyright © 2021 Tinder (Match Group, LLC)
 //
 
-@testable import Nodes
+import Nodes
 
 // swiftlint:disable:next file_types_order
 internal final class FlowMock: Flow, Equatable {
