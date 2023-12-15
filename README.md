@@ -138,6 +138,10 @@ brew reinstall --build-from-source mockolo
 
 ## Optional Customization
 
-### Using RxSwift with Nodes
+### UI Frameworks
 
-While Nodes works out-of-the-box with Combine, using [RxSwift](https://github.com/ReactiveX/RxSwift) with Nodes requires [custom configuration and setup](RxSwift.md).
+While Nodes works out-of-the-box with [UIKit](https://developer.apple.com/documentation/uikit) and [SwiftUI](https://developer.apple.com/xcode/swiftui) (for iOS), custom [configuration is required](Configuration.md) to use other UI frameworks, such as [AppKit](https://developer.apple.com/documentation/appkit).
+
+### Reactive Frameworks
+
+While Nodes works out-of-the-box with [Combine](https://developer.apple.com/documentation/combine), custom [configuration and setup is required](RxSwift.md) to use other reactive frameworks, such [RxSwift](https://github.com/ReactiveX/RxSwift).
