@@ -2,12 +2,24 @@
 //  Copyright © 2021 Tinder (Match Group, LLC)
 //
 
+import Codextended
 import Nimble
 import NodesXcodeTemplatesGenerator
 import SnapshotTesting
 import XCTest
+import Yams
 
 final class ConfigTests: XCTestCase, TestFactories {
+
+    func testConfigErrorLocalizedDescription() {
+        expect(Config.ConfigError.emptyStringNotAllowed(key: "<key>").localizedDescription) == """
+            ERROR: Empty String Not Allowed [key: <key>] \
+            (TIP: Omit from config for the default value to be used instead)
+            """
+        expect(Config.ConfigError.uiFrameworkNotDefined(kind: .uiKit).localizedDescription) == """
+            ERROR: UIFramework Not Defined [kind: uiKit]
+            """
+    }
 
     func testConfig() throws {
         let fileSystem: FileSystemMock = .init()
@@ -30,6 +42,56 @@ final class ConfigTests: XCTestCase, TestFactories {
         assertSnapshot(matching: Config(), as: .dump)
     }
 
+    func testDecodingThrowsEmptyStringNotAllowedForCustomUIFramework() throws {
+        let requiredKeys: [(key: String, yaml: String)] = [
+            (key: "name", yaml: givenCustomUIFrameworkYAML(name: "")),
+            (key: "import", yaml: givenCustomUIFrameworkYAML(import: "")),
+            (key: "viewControllerType", yaml: givenCustomUIFrameworkYAML(viewControllerType: ""))
+        ]
+        for (key, yaml): (String, String) in requiredKeys {
+            expect(try Data(yaml.utf8).decoded(as: Config.self, using: YAMLDecoder()))
+                .to(throwError(errorType: DecodingError.self) { error in
+                    guard case let .dataCorrupted(context) = error,
+                          let configError: Config.ConfigError = context.underlyingError as? Config.ConfigError
+                    else { return fail("expected data corrupted case with underlying config error") }
+                    expect(configError) == .emptyStringNotAllowed(key: key)
+                    expect(configError.localizedDescription) == """
+                        ERROR: Empty String Not Allowed [key: \(key)] \
+                        (TIP: Omit from config for the default value to be used instead)
+                        """
+                })
+        }
+    }
+
+    func testDecodingThrowsEmptyStringNotAllowed() throws {
+        let requiredKeys: [String] = [
+            "publisherType",
+            "viewControllableFlowType",
+            "viewControllableType",
+            "viewControllerSubscriptionsProperty",
+            "viewStateEmptyFactory",
+            "viewStatePropertyComment",
+            "viewStatePropertyName",
+            "viewStateTransform"
+        ]
+        for key: String in requiredKeys {
+            let yaml: String = """
+                \(key): ""
+                """
+            expect(try Data(yaml.utf8).decoded(as: Config.self, using: YAMLDecoder()))
+                .to(throwError(errorType: DecodingError.self) { error in
+                    guard case let .dataCorrupted(context) = error,
+                          let configError: Config.ConfigError = context.underlyingError as? Config.ConfigError
+                    else { return fail("expected data corrupted case with underlying config error") }
+                    expect(configError) == .emptyStringNotAllowed(key: key)
+                    expect(configError.localizedDescription) == """
+                        ERROR: Empty String Not Allowed [key: \(key)] \
+                        (TIP: Omit from config for the default value to be used instead)
+                        """
+                })
+        }
+    }
+
     func testUIFrameworkForKind() throws {
         let config: Config = givenConfig()
         try UIFramework.Kind
@@ -46,7 +108,7 @@ final class ConfigTests: XCTestCase, TestFactories {
                 expect(try config.uiFramework(for: kind))
                     .to(throwError(errorType: Config.ConfigError.self) { error in
                         expect(error) == .uiFrameworkNotDefined(kind: kind)
-                        expect(error.localizedDescription) == "ERROR: UIFramework Not Defined [`kind: \(kind)`]"
+                        expect(error.localizedDescription) == "ERROR: UIFramework Not Defined [kind: \(kind)]"
                     })
             }
     }
@@ -121,6 +183,21 @@ final class ConfigTests: XCTestCase, TestFactories {
         isPreviewProviderEnabled: true
         isTestTemplatesGenerationEnabled: true
         isPeripheryCommentEnabled: true
+        """
+    }
+
+    private func givenCustomUIFrameworkYAML(
+        name: String = "<name>",
+        import: String = "<import>",
+        viewControllerType: String = "<viewControllerType>"
+    ) -> String {
+        """
+        uiFrameworks:
+          - framework:
+              custom:
+                name: \(name)
+                import: \(`import`)
+                viewControllerType: \(viewControllerType)
         """
     }
 }

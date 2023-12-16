@@ -73,18 +73,51 @@ final class UIFrameworkFrameworkTests: XCTestCase {
             }
     }
 
+    func testDecodingThrowsEmptyStringNotAllowed() throws {
+        let requiredKeys: [(key: String, yaml: String)] = [
+            (key: "name", yaml: givenCustomYAML(name: "")),
+            (key: "import", yaml: givenCustomYAML(import: "")),
+            (key: "viewControllerType", yaml: givenCustomYAML(viewControllerType: ""))
+        ]
+        for (key, yaml): (String, String) in requiredKeys {
+            expect(try Data(yaml.utf8).decoded(as: UIFramework.Framework.self, using: YAMLDecoder()))
+                .to(throwError(errorType: DecodingError.self) { error in
+                    guard case let .dataCorrupted(context) = error,
+                          let configError: Config.ConfigError = context.underlyingError as? Config.ConfigError
+                    else { return fail("expected data corrupted case with underlying config error") }
+                    expect(configError) == .emptyStringNotAllowed(key: key)
+                    expect(configError.localizedDescription) == """
+                        ERROR: Empty String Not Allowed [key: \(key)] \
+                        (TIP: Omit from config for the default value to be used instead)
+                        """
+                })
+        }
+    }
+
     private func givenYAML(for framework: UIFramework.Framework) -> String {
         switch framework {
         case .appKit, .uiKit, .swiftUI:
             return framework.name
         case let .custom(name, `import`, viewControllerType, viewControllerSuperParameters):
-            return """
-                custom:
-                  name: \(name)
-                  import: \(`import`)
-                  viewControllerType: \(viewControllerType)
-                  viewControllerSuperParameters: \(viewControllerSuperParameters)
-                """
+            return givenCustomYAML(name: name,
+                                   import: `import`,
+                                   viewControllerType: viewControllerType,
+                                   viewControllerSuperParameters: viewControllerSuperParameters)
         }
+    }
+
+    private func givenCustomYAML(
+        name: String = "<name>",
+        import: String = "<import>",
+        viewControllerType: String = "<viewControllerType>",
+        viewControllerSuperParameters: String = "<viewControllerSuperParameters>"
+    ) -> String {
+        """
+        custom:
+          name: \(name)
+          import: \(`import`)
+          viewControllerType: \(viewControllerType)
+          viewControllerSuperParameters: \(viewControllerSuperParameters)
+        """
     }
 }

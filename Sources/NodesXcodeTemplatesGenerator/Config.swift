@@ -10,12 +10,16 @@ public struct Config: Equatable, Codable {
 
     public enum ConfigError: LocalizedError, Equatable {
 
+        case emptyStringNotAllowed(key: String)
         case uiFrameworkNotDefined(kind: UIFramework.Kind)
 
         public var errorDescription: String? {
             switch self {
+            case let .emptyStringNotAllowed(key):
+                let tip: String = "Omit from config for the default value to be used instead"
+                return "ERROR: Empty String Not Allowed [key: \(key)] (TIP: \(tip))"
             case let .uiFrameworkNotDefined(kind):
-                return "ERROR: UIFramework Not Defined [`kind: \(kind)`]"
+                return "ERROR: UIFramework Not Defined [kind: \(kind)]"
             }
         }
     }
@@ -126,10 +130,17 @@ extension Config {
 
     // swiftlint:disable:next function_body_length
     public init(from decoder: Decoder) throws {
+
         let defaults: Config = .init()
-        uiFrameworks =
-            (try? decoder.decode(CodingKeys.uiFrameworks))
-            ?? defaults.uiFrameworks
+
+        do {
+            uiFrameworks = try decoder.decode(CodingKeys.uiFrameworks)
+        } catch let error as Config.ConfigError {
+            throw error
+        } catch {
+            uiFrameworks = defaults.uiFrameworks
+        }
+
         fileHeader =
             (try? decoder.decodeString(CodingKeys.fileHeader))
             ?? defaults.fileHeader
@@ -208,5 +219,23 @@ extension Config {
         isPeripheryCommentEnabled =
             (try? decoder.decode(CodingKeys.isPeripheryCommentEnabled))
             ?? defaults.isPeripheryCommentEnabled
+
+        try validateRequiredStrings()
+    }
+
+    private func validateRequiredStrings() throws {
+        let required: [(key: String, value: String)] = [
+            (key: "publisherType", value: publisherType),
+            (key: "viewControllableFlowType", value: viewControllableFlowType),
+            (key: "viewControllableType", value: viewControllableType),
+            (key: "viewControllerSubscriptionsProperty", value: viewControllerSubscriptionsProperty),
+            (key: "viewStateEmptyFactory", value: viewStateEmptyFactory),
+            (key: "viewStatePropertyComment", value: viewStatePropertyComment),
+            (key: "viewStatePropertyName", value: viewStatePropertyName),
+            (key: "viewStateTransform", value: viewStateTransform)
+        ]
+        for (key, value) in required where value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            throw ConfigError.emptyStringNotAllowed(key: key)
+        }
     }
 }
