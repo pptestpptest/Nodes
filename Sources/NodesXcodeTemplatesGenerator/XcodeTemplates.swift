@@ -20,18 +20,18 @@ public final class XcodeTemplates {
     public func generate(
         identifier: String
     ) throws {
-        let url: URL = fileSystem.libraryURL
+        let directory: URL = fileSystem.libraryURL
             .appendingPathComponent("Developer")
             .appendingPathComponent("Xcode")
             .appendingPathComponent("Templates")
             .appendingPathComponent("File Templates")
             .appendingPathComponent("Nodes Architecture Framework (\(identifier))")
-        try? fileSystem.removeItem(at: url)
-        try generate(at: url)
+        try? fileSystem.removeItem(at: directory)
+        try generate(into: directory)
     }
 
     public func generate(
-        at url: URL
+        into directory: URL
     ) throws {
         var templates: [XcodeTemplate] = UIFramework.Kind
             .allCases
@@ -46,6 +46,6 @@ public final class XcodeTemplates {
             WorkerXcodeTemplate(config: config)
         ]
         let generator: XcodeTemplateGenerator = .init(fileSystem: fileSystem)
-        try templates.forEach { try generator.generate(template: $0, into: url) }
+        try templates.forEach { try generator.generate(template: $0, into: directory) }
     }
 }
