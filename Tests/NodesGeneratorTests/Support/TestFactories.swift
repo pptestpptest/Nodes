@@ -62,6 +62,7 @@ extension TestFactories {
         try NodeStencilContext(
             fileHeader: "<fileHeader>",
             nodeName: nodeName,
+            pluginListName: mockCount > 0 ? "<pluginListName>" : "",
             analyticsImports: .mock(with: "analyticsImport", count: mockCount),
             builderImports: .mock(with: "builderImport", count: mockCount),
             contextImports: .mock(with: "contextImport", count: mockCount),
