@@ -25,8 +25,12 @@
 			<true/>
 			<key>Required</key>
 			<true/>
+			<key>RequiredOptions</key>
+			<dict/>
 			<key>Type</key>
 			<string>text</string>
+			<key>Values</key>
+			<array/>
 		</dict>
 		<dict>
 			<key>Description</key>
@@ -39,14 +43,18 @@
 			<true/>
 			<key>Required</key>
 			<true/>
+			<key>RequiredOptions</key>
+			<dict/>
 			<key>Type</key>
 			<string>text</string>
+			<key>Values</key>
+			<array/>
 		</dict>
 	</array>
 	<key>Platforms</key>
 	<array/>
 	<key>SortOrder</key>
-	<integer>8</integer>
+	<integer>9</integer>
 	<key>Summary</key>
 	<string>The source file implementing a Plugin</string>
 	<key>SupportsSwiftPackage</key>

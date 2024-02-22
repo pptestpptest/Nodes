@@ -17,6 +17,8 @@ internal struct XcodeTemplatePropertyList: Equatable, Codable {
             case description = "Description"
             case type = "Type"
             case notPersisted = "NotPersisted"
+            case values = "Values"
+            case requiredOptions = "RequiredOptions"
             case `default` = "Default"
         }
 
@@ -26,20 +28,27 @@ internal struct XcodeTemplatePropertyList: Equatable, Codable {
         internal let description: String
         internal let type: String
         internal let notPersisted: Bool
+        internal let values: [String]
+        internal let requiredOptions: [String: [String]]
         internal let `default`: String?
 
         internal init(
             identifier: String,
             name: String,
             description: String,
+            type: String = "text",
+            values: [String] = [],
+            requiredOptions: [String: [String]] = [:],
             default: String? = nil
         ) {
             self.identifier = identifier
             self.required = true
             self.name = name
             self.description = description
-            self.type = "text"
+            self.type = type
             self.notPersisted = true
+            self.values = values
+            self.requiredOptions = requiredOptions
             self.default = `default`
         }
     }

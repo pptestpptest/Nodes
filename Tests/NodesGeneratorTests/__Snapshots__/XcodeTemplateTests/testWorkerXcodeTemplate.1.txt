@@ -29,8 +29,10 @@
         - name: "Worker name:"
         - notPersisted: true
         - required: true
+        - requiredOptions: 0 key/value pairs
         - type: "text"
+        - values: 0 elements
     - platforms: 0 elements
-    - sortOrder: 9
+    - sortOrder: 10
     - summary: "The source file implementing a Worker"
     - supportsSwiftPackage: true

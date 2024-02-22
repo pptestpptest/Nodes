@@ -25,14 +25,18 @@
 			<true/>
 			<key>Required</key>
 			<true/>
+			<key>RequiredOptions</key>
+			<dict/>
 			<key>Type</key>
 			<string>text</string>
+			<key>Values</key>
+			<array/>
 		</dict>
 	</array>
 	<key>Platforms</key>
 	<array/>
 	<key>SortOrder</key>
-	<integer>9</integer>
+	<integer>10</integer>
 	<key>Summary</key>
 	<string>The source file implementing a Worker</string>
 	<key>SupportsSwiftPackage</key>

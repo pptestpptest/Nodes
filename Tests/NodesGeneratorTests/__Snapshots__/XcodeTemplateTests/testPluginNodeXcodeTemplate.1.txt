@@ -32,8 +32,10 @@
         - name: "Node name:"
         - notPersisted: true
         - required: true
+        - requiredOptions: 0 key/value pairs
         - type: "text"
+        - values: 0 elements
     - platforms: 0 elements
-    - sortOrder: 7
+    - sortOrder: 8
     - summary: "The source file implementing a Plugin for a Node"
     - supportsSwiftPackage: true
