@@ -38,6 +38,7 @@ public enum StencilTemplate: Equatable, CustomStringConvertible {
         public let builder: StencilTemplate
         public let context: StencilTemplate
         public let flow: StencilTemplate
+        public let plugin: StencilTemplate
         public let state: StencilTemplate
         public let viewController: StencilTemplate
         public let viewState: StencilTemplate
@@ -45,6 +46,7 @@ public enum StencilTemplate: Equatable, CustomStringConvertible {
         public let analyticsTests: StencilTemplate
         public let contextTests: StencilTemplate
         public let flowTests: StencilTemplate
+        public let pluginTests: StencilTemplate
         public let viewControllerTests: StencilTemplate
         public let viewStateFactoryTests: StencilTemplate
 
@@ -53,34 +55,47 @@ public enum StencilTemplate: Equatable, CustomStringConvertible {
             self.builder = .builder(variation)
             self.context = .context
             self.flow = .flow
+            self.plugin = .plugin
             self.state = .state
             self.viewController = .viewController(variation)
             self.viewState = .viewState
             self.analyticsTests = .analyticsTests
             self.contextTests = .contextTests
             self.flowTests = .flowTests
+            self.pluginTests = .pluginTests
             self.viewControllerTests = .viewControllerTests(variation)
             self.viewStateFactoryTests = .viewStateFactoryTests
         }
 
         public func stencils(
+            includePlugin: Bool = false,
             includeTests: Bool = false
         ) -> [StencilTemplate] {
-            let stencils: [StencilTemplate] = [
+            var stencils: [StencilTemplate] = [
                 analytics,
                 builder,
                 context,
-                flow,
+                flow
+            ]
+            if includePlugin {
+                stencils.append(.plugin)
+            }
+            stencils += [
                 state,
                 viewController,
                 viewState
             ]
             guard includeTests
             else { return stencils }
-            return stencils + [
+            stencils += [
                 analyticsTests,
                 contextTests,
-                flowTests,
+                flowTests
+            ]
+            if includePlugin {
+                stencils.append(.pluginTests)
+            }
+            return stencils + [
                 viewControllerTests,
                 viewStateFactoryTests
             ]
