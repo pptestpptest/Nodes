@@ -1,0 +1,44 @@
+{{ file_header }}
+
+#warning("Manually move this test file to the corresponding test target then delete this warning.")
+{% if worker_tests_imports %}
+
+{% for import in worker_tests_imports %}
+import {{ import }}
+{% endfor %}
+{% endif %}
+
+final class {{ worker_name }}WorkerTests: XCTestCase {
+
+    private var worker: {{ worker_name }}WorkerImp!
+
+    override func setUp() {
+        super.setUp()
+        worker = {{ worker_name }}WorkerImp()
+    }
+
+    override func tearDown() {
+        worker = nil
+        super.tearDown()
+    }
+
+    func testWorking() {
+        {% if is_nimble_enabled %}
+        expect { self.worker.isWorking } == false
+        {% else %}
+        XCTAssertFalse(worker.isWorking)
+        {% endif %}
+        worker.start()
+        {% if is_nimble_enabled %}
+        expect { self.worker.isWorking } == true
+        {% else %}
+        XCTAssertTrue(worker.isWorking)
+        {% endif %}
+        worker.stop()
+        {% if is_nimble_enabled %}
+        expect { self.worker.isWorking } == false
+        {% else %}
+        XCTAssertFalse(worker.isWorking)
+        {% endif %}
+    }
+}
