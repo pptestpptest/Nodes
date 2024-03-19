@@ -13,13 +13,15 @@ import XCTest
 final class UIWindowViewControllableTests: XCTestCase {
 
     @MainActor
-    func testPresent() {
+    func testMakeKeyAndVisible() {
         let testWindow: UIWindow = givenWindow()
         let testViewController: UIViewController = givenViewController()
         expect(testWindow.rootViewController) == nil
+        expect(testWindow.isHidden) == true
         expect(testWindow.isKeyWindow) == false
-        testWindow.present(testViewController)
+        testWindow.makeKeyAndVisible(rootViewController: testViewController)
         expect(testWindow.rootViewController) == testViewController
+        expect(testWindow.isHidden) == false
         expect(testWindow.isKeyWindow) == true
     }
 
