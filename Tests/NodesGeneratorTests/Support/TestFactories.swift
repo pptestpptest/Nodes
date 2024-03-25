@@ -252,6 +252,7 @@ extension TestFactories {
             fileHeader: "<fileHeader>",
             workerName: "<workerName>",
             workerImports: .mock(with: "workerImport", count: mockCount),
+            workerTestsImports: .mock(with: "workerTestsImport", count: mockCount),
             workerGenericTypes: .mock(with: "workerGenericType", count: mockCount),
             isPeripheryCommentEnabled: mockCount > 0,
             isNimbleEnabled: mockCount > 0
