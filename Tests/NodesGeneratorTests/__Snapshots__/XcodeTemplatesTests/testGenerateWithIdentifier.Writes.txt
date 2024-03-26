@@ -1,4 +1,4 @@
-▿ 185 elements
+▿ 186 elements
   ▿ (2 elements)
     - path: "/Developer/Xcode/Templates/File Templates/Nodes Architecture Framework (identifier)/Node - AppKit.xctemplate/___FILEBASENAME___Analytics.swift"
     - atomically: true
@@ -550,6 +550,9 @@
     - atomically: true
   ▿ (2 elements)
     - path: "/Developer/Xcode/Templates/File Templates/Nodes Architecture Framework (identifier)/Worker.xctemplate/___FILEBASENAME___Worker.swift"
+    - atomically: true
+  ▿ (2 elements)
+    - path: "/Developer/Xcode/Templates/File Templates/Nodes Architecture Framework (identifier)/Worker.xctemplate/___FILEBASENAME___WorkerTests.swift"
     - atomically: true
   ▿ (2 elements)
     - path: "/Developer/Xcode/Templates/File Templates/Nodes Architecture Framework (identifier)/Worker.xctemplate/TemplateInfo.plist"
