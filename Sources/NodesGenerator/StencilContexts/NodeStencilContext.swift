@@ -32,8 +32,8 @@ public struct NodeStencilContext: StencilContext {
     private let viewControllableMockContents: String
     private let viewControllerType: String
     private let viewControllerSuperParameters: String
-    private let viewControllerProperties: String
     private let viewControllerMethods: String
+    private let viewControllerStaticContent: String
     private let viewControllerSubscriptionsProperty: String
     private let viewControllerUpdateComment: String
     private let viewStateEmptyFactory: String
@@ -79,8 +79,8 @@ public struct NodeStencilContext: StencilContext {
             "view_controllable_mock_contents": viewControllableMockContents,
             "view_controller_type": viewControllerType,
             "view_controller_super_parameters": viewControllerSuperParameters,
-            "view_controller_properties": viewControllerProperties,
             "view_controller_methods": viewControllerMethods,
+            "view_controller_static_content": viewControllerStaticContent,
             "view_controller_subscriptions_property": viewControllerSubscriptionsProperty,
             "view_controller_update_comment": viewControllerUpdateComment,
             "view_state_empty_factory": viewStateEmptyFactory,
@@ -127,8 +127,8 @@ public struct NodeStencilContext: StencilContext {
         viewControllableMockContents: String,
         viewControllerType: String,
         viewControllerSuperParameters: String,
-        viewControllerProperties: String,
         viewControllerMethods: String,
+        viewControllerStaticContent: String,
         viewControllerSubscriptionsProperty: String,
         viewControllerUpdateComment: String,
         viewStateEmptyFactory: String,
@@ -173,8 +173,8 @@ public struct NodeStencilContext: StencilContext {
             viewControllableMockContents: viewControllableMockContents,
             viewControllerType: viewControllerType,
             viewControllerSuperParameters: viewControllerSuperParameters,
-            viewControllerProperties: viewControllerProperties,
             viewControllerMethods: viewControllerMethods,
+            viewControllerStaticContent: viewControllerStaticContent,
             viewControllerSubscriptionsProperty: viewControllerSubscriptionsProperty,
             viewControllerUpdateComment: viewControllerUpdateComment,
             viewStateEmptyFactory: viewStateEmptyFactory,
@@ -215,8 +215,8 @@ public struct NodeStencilContext: StencilContext {
         viewControllableMockContents: String,
         viewControllerType: String,
         viewControllerSuperParameters: String,
-        viewControllerProperties: String,
         viewControllerMethods: String,
+        viewControllerStaticContent: String,
         viewControllerSubscriptionsProperty: String,
         viewControllerUpdateComment: String,
         viewStateEmptyFactory: String,
@@ -263,8 +263,8 @@ public struct NodeStencilContext: StencilContext {
             viewControllableMockContents: viewControllableMockContents,
             viewControllerType: viewControllerType,
             viewControllerSuperParameters: viewControllerSuperParameters,
-            viewControllerProperties: viewControllerProperties,
             viewControllerMethods: viewControllerMethods,
+            viewControllerStaticContent: viewControllerStaticContent,
             viewControllerSubscriptionsProperty: viewControllerSubscriptionsProperty,
             viewControllerUpdateComment: viewControllerUpdateComment,
             viewStateEmptyFactory: viewStateEmptyFactory,
@@ -311,8 +311,8 @@ public struct NodeStencilContext: StencilContext {
         viewControllableMockContents: String,
         viewControllerType: String,
         viewControllerSuperParameters: String,
-        viewControllerProperties: String,
         viewControllerMethods: String,
+        viewControllerStaticContent: String,
         viewControllerSubscriptionsProperty: String,
         viewControllerUpdateComment: String,
         viewStateEmptyFactory: String,
@@ -357,8 +357,8 @@ public struct NodeStencilContext: StencilContext {
         self.viewControllableMockContents = viewControllableMockContents
         self.viewControllerType = viewControllerType
         self.viewControllerSuperParameters = viewControllerSuperParameters
-        self.viewControllerProperties = viewControllerProperties
         self.viewControllerMethods = viewControllerMethods
+        self.viewControllerStaticContent = viewControllerStaticContent
         self.viewControllerSubscriptionsProperty = viewControllerSubscriptionsProperty
         self.viewControllerUpdateComment = viewControllerUpdateComment
         self.viewStateEmptyFactory = viewStateEmptyFactory

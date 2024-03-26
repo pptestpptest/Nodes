@@ -19,13 +19,9 @@ extension TestFactories {
             UIFramework(framework: .custom(name: "<uiFrameworkName>",
                                            import: "<uiFrameworkImport>",
                                            viewControllerType: "<viewControllerType>",
-                                           viewControllerSuperParameters: "<viewControllerSuperParameters>"))
-        ].map { uiFramework in
-            var uiFramework: UIFramework = uiFramework
-            uiFramework.viewControllerProperties = "<viewControllerProperties>"
-            uiFramework.viewControllerMethods = "<viewControllerMethods>"
-            return uiFramework
-        }
+                                           viewControllerSuperParameters: "<viewControllerSuperParameters>",
+                                           viewControllerMethods: "<viewControllerMethods>"))
+        ]
         config.baseImports = ["<baseImport>"]
         config.baseTestImports = ["<baseTestImport>"]
         config.reactiveImports = ["<reactiveImport>"]
@@ -90,8 +86,8 @@ extension TestFactories {
             viewControllableMockContents: mockCount > 0 ? "<viewControllableMockContents>" : "",
             viewControllerType: "<viewControllerType>",
             viewControllerSuperParameters: mockCount > 0 ? "<viewControllerSuperParameters>" : "",
-            viewControllerProperties: mockCount > 0 ? "<viewControllerProperties>" : "",
             viewControllerMethods: mockCount > 0 ? "<viewControllerMethods>" : "",
+            viewControllerStaticContent: mockCount > 0 ? "<viewControllerStaticContent>" : "",
             viewControllerSubscriptionsProperty: "<viewControllerSubscriptionsProperty>",
             viewControllerUpdateComment: mockCount > 0 ? "<viewControllerUpdateComment>" : "",
             viewStateEmptyFactory: "<viewStateEmptyFactory>",
@@ -136,8 +132,8 @@ extension TestFactories {
             viewControllableMockContents: mockCount > 0 ? "<viewControllableMockContents>" : "",
             viewControllerType: "<viewControllerType>",
             viewControllerSuperParameters: mockCount > 0 ? "<viewControllerSuperParameters>" : "",
-            viewControllerProperties: mockCount > 0 ? "<viewControllerProperties>" : "",
             viewControllerMethods: mockCount > 0 ? "<viewControllerMethods>" : "",
+            viewControllerStaticContent: mockCount > 0 ? "<viewControllerStaticContent>" : "",
             viewControllerSubscriptionsProperty: "<viewControllerSubscriptionsProperty>",
             viewControllerUpdateComment: mockCount > 0 ? "<viewControllerUpdateComment>" : "",
             viewStateEmptyFactory: "<viewStateEmptyFactory>",
