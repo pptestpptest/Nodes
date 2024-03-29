@@ -8,14 +8,6 @@ import XCTest
 
 final class XcodeTemplatePermutationTests: XCTestCase, TestFactories {
 
-    func testNodeXcodeTemplatePermutation() throws {
-        let config: Config = givenConfig()
-        config.uiFrameworks.forEach { framework in
-            let permutation: NodeXcodeTemplatePermutation = .init(name: "<name>", for: framework, config: config)
-            assertSnapshot(of: permutation, as: .dump, named: framework.kind.rawValue)
-        }
-    }
-
     func testNodeXcodeTemplateV2Permutation() throws {
         let config: Config = givenConfig()
         config.uiFrameworks.forEach { framework in
