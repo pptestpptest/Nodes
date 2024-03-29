@@ -2,7 +2,7 @@
 //  Copyright © 2023 Tinder (Match Group, LLC)
 //
 
-public enum Preset: String {
+public enum Preset: String, CaseIterable {
 
     case app = "App"
     case scene = "Scene"
@@ -28,5 +28,9 @@ public enum Preset: String {
 
     internal var componentDependencies: String {
         self == .app ? "fileprivate let appService: AppService = AppServiceImp()" : ""
+    }
+
+    internal static func isPresetNodeName(_ nodeName: String) -> Bool {
+        allCases.map(\.nodeName).contains(nodeName)
     }
 }
