@@ -20,7 +20,7 @@ internal struct NodeXcodeTemplate: XcodeTemplate {
                    type: "popup",
                    values: uiFrameworks.map(\.name),
                    default: uiFrameworks.first?.name ?? "")
-            Option(identifier: XcodeTemplateConstants.usePluginList,
+            Option(identifier: XcodeTemplateConstants.createdForPluginList,
                    name: "Created for existing Plugin List",
                    description: "Whether the node is created for use in an existing Plugin List.",
                    type: "checkbox",
@@ -28,14 +28,14 @@ internal struct NodeXcodeTemplate: XcodeTemplate {
             Option(identifier: XcodeTemplateConstants.pluginListName,
                    name: "Existing Plugin List:",
                    description: "The name of an existing Plugin List.",
-                   requiredOptions: [XcodeTemplateConstants.usePluginList: ["true"]],
+                   requiredOptions: [XcodeTemplateConstants.createdForPluginList: ["true"]],
                    default: "MyFeature")
         }
 
         permutations = uiFrameworks.flatMap { framework in
             [
-                NodeXcodeTemplatePermutation(usePluginList: true, for: framework, config: config),
-                NodeXcodeTemplatePermutation(usePluginList: false, for: framework, config: config)
+                NodeXcodeTemplatePermutation(createdForPluginList: true, for: framework, config: config),
+                NodeXcodeTemplatePermutation(createdForPluginList: false, for: framework, config: config)
             ]
         }
     }
