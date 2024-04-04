@@ -38,7 +38,7 @@
 			<key>Description</key>
 			<string>The UI framework of the new node.</string>
 			<key>Identifier</key>
-			<string>uiFramework</string>
+			<string>UIFramework</string>
 			<key>Name</key>
 			<string>UI Framework:</string>
 			<key>NotPersisted</key>
@@ -83,7 +83,7 @@
 			<key>Description</key>
 			<string>The name of an existing Plugin List.</string>
 			<key>Identifier</key>
-			<string>pluginListName</string>
+			<string>PluginListName</string>
 			<key>Name</key>
 			<string>Existing Plugin List:</string>
 			<key>NotPersisted</key>

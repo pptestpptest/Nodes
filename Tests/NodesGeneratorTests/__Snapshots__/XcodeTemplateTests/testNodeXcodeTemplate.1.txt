@@ -65,7 +65,7 @@
           - "<baseImport>"
           - "<dependencyInjectionImport>"
           - "Nodes"
-        - pluginListName: "___VARIABLE_pluginListName___"
+        - pluginListName: "___VARIABLE_PluginListName___"
         - pluginName: "___VARIABLE_productName___"
         ▿ pluginTestsImports: 2 elements
           - "<baseTestImport>"
@@ -309,7 +309,7 @@
           - "<baseImport>"
           - "<dependencyInjectionImport>"
           - "Nodes"
-        - pluginListName: "___VARIABLE_pluginListName___"
+        - pluginListName: "___VARIABLE_PluginListName___"
         - pluginName: "___VARIABLE_productName___"
         ▿ pluginTestsImports: 2 elements
           - "<baseTestImport>"
@@ -553,7 +553,7 @@
           - "<baseImport>"
           - "<dependencyInjectionImport>"
           - "Nodes"
-        - pluginListName: "___VARIABLE_pluginListName___"
+        - pluginListName: "___VARIABLE_PluginListName___"
         - pluginName: "___VARIABLE_productName___"
         ▿ pluginTestsImports: 2 elements
           - "<baseTestImport>"
@@ -797,7 +797,7 @@
           - "<baseImport>"
           - "<dependencyInjectionImport>"
           - "Nodes"
-        - pluginListName: "___VARIABLE_pluginListName___"
+        - pluginListName: "___VARIABLE_PluginListName___"
         - pluginName: "___VARIABLE_productName___"
         ▿ pluginTestsImports: 2 elements
           - "<baseTestImport>"
@@ -998,7 +998,7 @@
         ▿ default: Optional<String>
           - some: "AppKit"
         - description: "The UI framework of the new node."
-        - identifier: "uiFramework"
+        - identifier: "UIFramework"
         - name: "UI Framework:"
         - notPersisted: true
         - required: true
@@ -1024,7 +1024,7 @@
         ▿ default: Optional<String>
           - some: "MyFeature"
         - description: "The name of an existing Plugin List."
-        - identifier: "pluginListName"
+        - identifier: "PluginListName"
         - name: "Existing Plugin List:"
         - notPersisted: true
         - required: true
