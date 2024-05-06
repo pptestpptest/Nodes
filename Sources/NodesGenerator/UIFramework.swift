@@ -16,6 +16,15 @@ public struct UIFramework: Codable, Equatable {
         public var name: String {
             rawValue
         }
+
+        public var isHostingSwiftUI: Bool {
+            switch self {
+            case .uiKitSwiftUI:
+                true
+            case .appKit, .uiKit, .custom:
+                false
+            }
+        }
     }
 
     public enum Framework: Codable, Equatable {
