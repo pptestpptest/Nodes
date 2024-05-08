@@ -9,6 +9,7 @@ public struct UIFramework: Codable, Equatable {
     public enum Kind: String, CaseIterable, Sendable {
 
         case appKit = "AppKit"
+        case appKitSwiftUI = "AppKit (SwiftUI)"
         case uiKit = "UIKit"
         case uiKitSwiftUI = "UIKit (SwiftUI)"
         case custom = "Custom"
@@ -19,7 +20,7 @@ public struct UIFramework: Codable, Equatable {
 
         public var isHostingSwiftUI: Bool {
             switch self {
-            case .uiKitSwiftUI:
+            case .appKitSwiftUI, .uiKitSwiftUI:
                 true
             case .appKit, .uiKit, .custom:
                 false
@@ -30,6 +31,7 @@ public struct UIFramework: Codable, Equatable {
     public enum Framework: Codable, Equatable {
 
         case appKit
+        case appKitSwiftUI
         case uiKit
         case uiKitSwiftUI
 
@@ -44,6 +46,8 @@ public struct UIFramework: Codable, Equatable {
             switch self {
             case .appKit:
                 .appKit
+            case .appKitSwiftUI:
+                .appKitSwiftUI
             case .uiKit:
                 .uiKit
             case .uiKitSwiftUI:
@@ -55,7 +59,7 @@ public struct UIFramework: Codable, Equatable {
 
         internal var name: String {
             switch self {
-            case .appKit, .uiKit, .uiKitSwiftUI:
+            case .appKit, .appKitSwiftUI, .uiKit, .uiKitSwiftUI:
                 kind.name
             case let .custom(name, _, _, _, _):
                 name
@@ -66,7 +70,7 @@ public struct UIFramework: Codable, Equatable {
             switch self {
             case .appKit, .uiKit:
                 name
-            case .uiKitSwiftUI:
+            case .appKitSwiftUI, .uiKitSwiftUI:
                 "SwiftUI"
             case let .custom(_, `import`, _, _, _):
                 `import`
@@ -77,6 +81,8 @@ public struct UIFramework: Codable, Equatable {
             switch self {
             case .appKit:
                 "NSViewController"
+            case .appKitSwiftUI:
+                "NSHostingController"
             case .uiKit:
                 "UIViewController"
             case .uiKitSwiftUI:
@@ -90,7 +96,7 @@ public struct UIFramework: Codable, Equatable {
             switch self {
             case .appKit, .uiKit:
                 "nibName: nil, bundle: nil"
-            case .uiKitSwiftUI:
+            case .appKitSwiftUI, .uiKitSwiftUI:
                 ""
             case let .custom(_, _, _, viewControllerSuperParameters, _):
                 viewControllerSuperParameters
@@ -148,7 +154,7 @@ public struct UIFramework: Codable, Equatable {
                     cancellables.cancelAll()
                 }
                 """
-            case .uiKitSwiftUI:
+            case .appKitSwiftUI, .uiKitSwiftUI:
                 ""
             case let .custom(_, _, _, _, viewControllerMethods):
                 viewControllerMethods
@@ -175,6 +181,8 @@ public struct UIFramework: Codable, Equatable {
             switch kind {
             case .appKit:
                 self = .appKit
+            case .appKitSwiftUI:
+                self = .appKitSwiftUI
             case .uiKit:
                 self = .uiKit
             case .uiKitSwiftUI:
@@ -199,6 +207,8 @@ public struct UIFramework: Codable, Equatable {
             switch key {
             case .appKit:
                 return .appKit
+            case .appKitSwiftUI:
+                return .appKitSwiftUI
             case .uiKit:
                 return .uiKit
             case .uiKitSwiftUI:

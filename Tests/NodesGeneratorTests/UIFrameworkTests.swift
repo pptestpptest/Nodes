@@ -44,6 +44,16 @@ final class UIFrameworkTests: XCTestCase {
             """
     }
 
+    func testInitWithFrameworkAppKitSwiftUI() {
+        let framework: UIFramework = .init(framework: .appKitSwiftUI)
+        expect(framework.kind) == .appKitSwiftUI
+        expect(framework.name) == "AppKit (SwiftUI)"
+        expect(framework.import) == "SwiftUI"
+        expect(framework.viewControllerType) == "NSHostingController"
+        expect(framework.viewControllerSuperParameters).to(beEmpty())
+        expect(framework.viewControllerMethods).to(beEmpty())
+    }
+
     func testInitWithFrameworkUIKit() {
         let framework: UIFramework = .init(framework: .uiKit)
         expect(framework.kind) == .uiKit
@@ -112,7 +122,7 @@ final class UIFrameworkTests: XCTestCase {
 
     private func givenYAML(for kind: UIFramework.Kind) -> String {
         switch kind {
-        case .appKit, .uiKit, .uiKitSwiftUI:
+        case .appKit, .appKitSwiftUI, .uiKit, .uiKitSwiftUI:
             return "framework: \(kind.name)"
         case .custom:
             return """
