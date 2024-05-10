@@ -574,6 +574,37 @@ files:
           </scenes>
       </document>
 
+  - path: "{{ project|replace:' ','_' }}/Sources/AppComponentFactory.swift"
+    contents: |
+      //
+      //  Created by {{ author }} on {{ date }}.
+      //
+
+      import Foundation
+
+      internal final class AppComponentFactory {
+
+          internal func callAsFunction() -> AppComponent {
+
+              #if DEBUG
+
+              guard !ProcessInfo.processInfo.arguments.contains("--stub")
+              else { return makeAppComponentWithStubbedDependencies() }
+
+              #endif
+
+              return AppComponent()
+          }
+
+          #if DEBUG
+
+          private func makeAppComponentWithStubbedDependencies() -> AppComponent {
+              AppComponent()
+          }
+
+          #endif
+      }
+
   - path: "{{ project|replace:' ','_' }}/Sources/AppDelegate.swift"
     contents: |
       //
@@ -585,7 +616,11 @@ files:
       @main
       internal final class AppDelegate: UIResponder, UIApplicationDelegate {
 
-          private lazy var appBuilder: AppBuilder = AppBuilderImp { AppComponent() }
+          private lazy var appBuilder: AppBuilder = AppBuilderImp {
+              let appComponentFactory: AppComponentFactory = .init()
+              return appComponentFactory()
+          }
+
           private lazy var appFlow: AppFlow = appBuilder.build()
 
           internal convenience init(appBuilder: AppBuilder) {
@@ -813,6 +848,7 @@ files:
               super.setUp()
               continueAfterFailure = false
               app = XCUIApplication()
+              app.launchArguments += ["--stub"]
               app.launch()
           }
 
