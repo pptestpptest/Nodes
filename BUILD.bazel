@@ -34,11 +34,7 @@ swift_binary(
 
 swift_library(
     name = "NodesXcodeTemplatesGenerator",
-    srcs = glob(
-        ["Sources/Executables/NodesXcodeTemplatesGenerator/**/*.swift"],
-        # Exclude non-UIKit `ViewControllable` implementation.
-        exclude = ["Sources/Nodes/ViewControllable/ViewControllable.swift"],
-    ),
+    srcs = glob(["Sources/Executables/NodesXcodeTemplatesGenerator/**/*.swift"]),
     deps = [
         ":NodesGenerator",
         "@ArgumentParser",
