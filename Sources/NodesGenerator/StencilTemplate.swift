@@ -270,19 +270,19 @@ public enum StencilTemplate: CustomStringConvertible, Equatable, Sendable {
         case .state:
             config.baseImports
         case .viewController:
-            config.baseImports
+            uiFramework == nil ? [] : config.baseImports
                 .union(["Nodes"])
                 .union(config.reactiveImports)
                 .union(config.viewControllerImports)
                 .union(uiFramework.flatMap { [$0.import] } ?? [])
         case .viewControllerTests:
-            config.baseTestImports
+            uiFramework == nil ? [] : config.baseTestImports
                 .union(config.reactiveImports)
         case .viewState:
-            config.baseImports
+            uiFramework == nil ? [] : config.baseImports
                 .union(["Nodes"])
         case .viewStateFactoryTests:
-            config.baseTestImports
+            uiFramework == nil ? [] : config.baseTestImports
         case .worker:
             config.baseImports
                 .union(["Nodes"])
