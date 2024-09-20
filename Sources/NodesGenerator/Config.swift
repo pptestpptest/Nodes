@@ -55,6 +55,7 @@ public struct Config: Codable, Equatable {
     public var workerGenericTypes: [String]
 
     public var isViewInjectedTemplateEnabled: Bool
+    public var isObservableStoreEnabled: Bool
     public var isPreviewProviderEnabled: Bool
     public var isTestTemplatesGenerationEnabled: Bool
     public var isPeripheryCommentEnabled: Bool
@@ -118,6 +119,7 @@ extension Config {
         contextGenericTypes = ["AnyCancellable"]
         workerGenericTypes = ["AnyCancellable"]
         isViewInjectedTemplateEnabled = true
+        isObservableStoreEnabled = false
         isPreviewProviderEnabled = false
         isTestTemplatesGenerationEnabled = true
         isPeripheryCommentEnabled = false
@@ -224,6 +226,9 @@ extension Config {
         isViewInjectedTemplateEnabled =
             (try? decoder.decode(CodingKeys.isViewInjectedTemplateEnabled))
             ?? defaults.isViewInjectedTemplateEnabled
+        isObservableStoreEnabled =
+            (try? decoder.decode(CodingKeys.isObservableStoreEnabled))
+            ?? defaults.isObservableStoreEnabled
         isPreviewProviderEnabled =
             (try? decoder.decode(CodingKeys.isPreviewProviderEnabled))
             ?? defaults.isPreviewProviderEnabled
