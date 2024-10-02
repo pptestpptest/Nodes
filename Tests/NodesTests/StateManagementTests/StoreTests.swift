@@ -81,6 +81,8 @@ final class StoreTests: XCTestCase {
         let store: PreviewStore = .init(viewState: 23)
         expect(store).to(notBeNilAndToDeallocateAfterTest())
         expect(store.viewState) == 23
+        store.viewState = 100
+        expect(store.viewState) == 100
     }
 
     @MainActor

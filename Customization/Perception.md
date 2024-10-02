@@ -29,16 +29,6 @@ public protocol PerceptibleViewStateStore<ViewState>: AnyObject, Perceptible {
     associatedtype ViewState: Equatable
 
     var viewState: ViewState { get }
-
-    func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: @escaping @MainActor (T) -> Void
-    ) -> Binding<T>
-
-    func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: (@MainActor (T) -> Void)?
-    ) -> Binding<T>
 }
 
 // MARK: - State Store
@@ -119,20 +109,6 @@ public final class AnyPerceptibleViewStateStore<
     ) where Base.ViewState == ViewState {
         box = PerceptibleViewStateStoreBox(base)
     }
-
-    public func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: @escaping @MainActor (T) -> Void
-    ) -> Binding<T> {
-        box.bind(to: keyPath, onChange: onChange)
-    }
-
-    public func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: (@MainActor (T) -> Void)?
-    ) -> Binding<T> {
-        box.bind(to: keyPath, onChange: onChange)
-    }
 }
 
 @preconcurrency
@@ -150,20 +126,6 @@ private class PerceptibleViewStateStoreBox<
     init(_ base: Base) {
         self.base = base
     }
-
-    override func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: @escaping @MainActor (T) -> Void
-    ) -> Binding<T> {
-        base.bind(to: keyPath, onChange: onChange)
-    }
-
-    override func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: (@MainActor (T) -> Void)?
-    ) -> Binding<T> {
-        base.bind(to: keyPath, onChange: onChange)
-    }
 }
 
 @preconcurrency
@@ -175,54 +137,20 @@ private class PerceptibleViewStateStoreBase<
     var viewState: ViewState {
         preconditionFailure("Property in abstract base class must be overridden")
     }
-
-    // swiftlint:disable:next unavailable_function
-    func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: @escaping @MainActor (T) -> Void
-    ) -> Binding<T> {
-        preconditionFailure("Method in abstract base class must be overridden")
-    }
-
-    // swiftlint:disable:next unavailable_function
-    func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: (@MainActor (T) -> Void)?
-    ) -> Binding<T> {
-        preconditionFailure("Method in abstract base class must be overridden")
-    }
 }
 
 // MARK: - Preview
-
-#if DEBUG
 
 @preconcurrency
 @MainActor
 public final class PerceptiblePreviewStore<ViewState: Equatable>: PerceptibleViewStateStore {
 
-    public let viewState: ViewState
+    public var viewState: ViewState
 
     public init(viewState: ViewState) {
         self.viewState = viewState
     }
-
-    public func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: @escaping @MainActor (T) -> Void
-    ) -> Binding<T> {
-        .constant(viewState[keyPath: keyPath])
-    }
-
-    public func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: (@MainActor (T) -> Void)?
-    ) -> Binding<T> {
-        .constant(viewState[keyPath: keyPath])
-    }
 }
-
-#endif
 
 // MARK: - Scope
 
@@ -247,20 +175,6 @@ private final class PerceptibleScope<
     ) {
         self.store = store
         self.keyPath = keyPath
-    }
-
-    func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: @escaping @MainActor (T) -> Void
-    ) -> Binding<T> {
-        store.bind(to: self.keyPath.appending(path: keyPath), onChange: onChange)
-    }
-
-    func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: (@MainActor (T) -> Void)?
-    ) -> Binding<T> {
-        store.bind(to: self.keyPath.appending(path: keyPath), onChange: onChange)
     }
 }
 
@@ -313,20 +227,6 @@ open class PerceptibleStore<
         self.viewStateSubject = viewStateSubject
         self.transform = transform
     }
-
-    public func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: @escaping @MainActor (T) -> Void
-    ) -> Binding<T> {
-        Binding(get: { [self] in viewState[keyPath: keyPath] }, set: { onChange($0) })
-    }
-
-    public func bind<T>(
-        to keyPath: KeyPath<ViewState, T>,
-        onChange: (@MainActor (T) -> Void)?
-    ) -> Binding<T> {
-        Binding(get: { [self] in viewState[keyPath: keyPath] }, set: { onChange?($0) })
-    }
 }
 
 // MARK: - Extensions
@@ -337,6 +237,29 @@ extension PerceptibleViewStateStore {
         viewState keyPath: KeyPath<ViewState, T>
     ) -> AnyPerceptibleViewStateStore<T> {
         AnyPerceptibleViewStateStore(PerceptibleScope(store: self, keyPath: keyPath))
+    }
+
+    public func bind<T>(
+        to keyPath: KeyPath<ViewState, T>,
+        onChange: @escaping @MainActor (T) -> Void
+    ) -> Binding<T> {
+        Binding { [self] in
+            viewState[keyPath: keyPath]
+        } set: { value in
+            onChange(value)
+        }
+    }
+
+    public func bind<T>(
+        to keyPath: KeyPath<ViewState, T>,
+        onChange: (@MainActor (T) -> Void)?
+    ) -> Binding<T> {
+        guard let onChange: (@MainActor (T) -> Void)
+        else {
+            assertionFailure("The `onChange` closure should not be nil")
+            return bind(to: keyPath) { _ in }
+        }
+        return bind(to: keyPath) { onChange($0) }
     }
 }
 ```
