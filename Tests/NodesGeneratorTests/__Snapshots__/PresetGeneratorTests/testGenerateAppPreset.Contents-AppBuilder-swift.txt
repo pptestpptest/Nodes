@@ -6,10 +6,6 @@ import Combine
 import NeedleFoundation
 import Nodes
 
-/// @mockable
-@MainActor
-internal protocol AppFlow: Flow {}
-
 // MARK: - Dynamic Dependencies
 
 /// Encapsulates arguments passed through the builder base class to its factory build method.
@@ -72,12 +68,6 @@ public final class AppComponent: BootstrapComponent {
 }
 
 // MARK: - Builder
-
-/// @mockable
-@MainActor
-internal protocol AppBuilder: AnyObject {
-    func build() -> AppFlow
-}
 
 internal final class AppBuilderImp: AbstractBuilder
 <

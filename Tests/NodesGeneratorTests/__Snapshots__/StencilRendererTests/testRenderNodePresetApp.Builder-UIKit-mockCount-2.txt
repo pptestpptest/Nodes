@@ -3,10 +3,6 @@
 import <builderImport1>
 import <builderImport2>
 
-/// @mockable
-@MainActor
-internal protocol AppFlow: Flow {}
-
 // MARK: - Dynamic Dependencies
 
 /// Encapsulates arguments passed through the builder base class to its factory build method.
@@ -71,13 +67,6 @@ public final class AppComponent: BootstrapComponent {
 }
 
 // MARK: - Builder
-
-// periphery:ignore
-/// @mockable
-@MainActor
-internal protocol AppBuilder: AnyObject {
-    func build() -> AppFlow
-}
 
 // periphery:ignore
 internal final class AppBuilderImp: AbstractBuilder
